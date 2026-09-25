@@ -6,25 +6,26 @@ interface MobileFrameProps {
 
 export const MobileFrame: React.FC<MobileFrameProps> = ({ children }) => {
   return (
-    <div className="w-full flex-1 flex justify-center items-start bg-slate-950 p-0 sm:py-4 sm:px-2">
-      <div className="w-full max-w-[430px] min-h-[820px] bg-slate-900 sm:rounded-[36px] sm:border-[6px] sm:border-slate-800 shadow-2xl overflow-hidden flex flex-col relative text-slate-100 sm:ring-1 sm:ring-slate-700/50">
-        {/* Mobile Speaker / Camera Notch bar */}
-        <div className="hidden sm:flex justify-center items-center pt-2 pb-1 bg-slate-900 z-20">
-          <div className="w-24 h-4 bg-slate-950 rounded-full flex items-center justify-end px-2">
-            <div className="w-2.5 h-2.5 rounded-full bg-slate-800 border border-slate-700" />
+    <main className="w-full flex-1 flex justify-center items-start bg-[#F4F7FB] p-0 sm:py-6 sm:px-4">
+      {/* Mobile container centered on desktop */}
+      <div className="w-full max-w-[440px] min-h-[820px] bg-white sm:rounded-[36px] sm:border sm:border-slate-200/90 shadow-xl shadow-slate-300/40 overflow-hidden flex flex-col relative text-[#171B28]">
+        {/* Subtle camera punch hole on desktop frame */}
+        <div className="hidden sm:flex justify-center items-center pt-2.5 pb-1 bg-white z-20 shrink-0">
+          <div className="w-20 h-3.5 bg-slate-100 rounded-full flex items-center justify-end px-2">
+            <div className="w-2 h-2 rounded-full bg-slate-300" />
           </div>
         </div>
 
         {/* Content container */}
-        <div className="flex-1 flex flex-col overflow-y-auto relative">
+        <div className="flex-1 flex flex-col overflow-y-auto relative bg-[#F4F7FB]">
           {children}
         </div>
 
-        {/* Mobile Home Indicator bar */}
-        <div className="hidden sm:flex justify-center items-center py-2 bg-slate-900/90 backdrop-blur z-20">
-          <div className="w-32 h-1 bg-slate-600/60 rounded-full" />
+        {/* iOS Home indicator on desktop frame */}
+        <div className="hidden sm:flex justify-center items-center py-2 bg-white z-20 shrink-0 border-t border-slate-100">
+          <div className="w-28 h-1 bg-slate-300 rounded-full" />
         </div>
       </div>
-    </div>
+    </main>
   );
 };

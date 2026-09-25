@@ -10,31 +10,31 @@ export const FreshnessBadge: React.FC<FreshnessBadgeProps> = ({ mode }) => {
   switch (mode) {
     case 'offline_local':
       return (
-        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-sky-500/10 text-sky-400 border border-sky-500/30">
-          <ShieldCheck className="w-3 h-3 text-sky-400" />
-          <span>已使用離線旅程包 (本機檢索)</span>
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-[#E0F4FC] text-[#00AEEF] border border-[#00AEEF]/30 shadow-2xs">
+          <ShieldCheck className="w-3.5 h-3.5 text-[#00AEEF] stroke-[2.5]" />
+          <span>離線旅程包（本機檢索）</span>
         </span>
       );
     case 'online_live':
       return (
-        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-          <Sparkles className="w-3 h-3 text-emerald-400" />
-          <span>已取得最新即時資訊 (Live Adapter)</span>
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-[#E6F9F0] text-[#18B46B] border border-[#18B46B]/30 shadow-2xs">
+          <Sparkles className="w-3.5 h-3.5 text-[#18B46B]" />
+          <span>最新即時動態（Live API）</span>
         </span>
       );
     case 'queued':
       return (
-        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-amber-500/10 text-amber-400 border border-amber-500/30">
-          <Clock className="w-3 h-3 text-amber-400" />
-          <span>等待連線中 (即時問題安全攔截)</span>
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-[#FEF3C7] text-[#D97706] border border-[#D97706]/30 shadow-2xs">
+          <Clock className="w-3.5 h-3.5 text-[#D97706]" />
+          <span>待連線佇列中（時效保護・不瞎答）</span>
         </span>
       );
     case 'not_found':
     default:
       return (
-        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-slate-700/50 text-slate-300 border border-slate-600">
-          <AlertCircle className="w-3 h-3 text-slate-400" />
-          <span>離線包中無資料 (防幻覺退避)</span>
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-[#F1F5F9] text-[#64748B] border border-slate-200">
+          <AlertCircle className="w-3.5 h-3.5 text-[#64748B]" />
+          <span>旅程包未收錄（誠實防幻覺）</span>
         </span>
       );
   }

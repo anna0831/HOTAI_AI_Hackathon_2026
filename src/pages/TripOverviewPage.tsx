@@ -1,6 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Calendar, User, Smartphone, AlertTriangle, ArrowRight, CheckCircle } from 'lucide-react';
+import { Calendar, User, Smartphone, AlertTriangle, CheckCircle } from 'lucide-react';
+import { ChicHeader } from '../components/ChicHeader';
+import { PrimaryCTA } from '../components/PrimaryCTA';
 import tripData from '../data/trip.json';
 import { analytics } from '../services/analytics';
 
@@ -16,86 +18,102 @@ export const TripOverviewPage: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col p-4 bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 overflow-y-auto">
-      {/* Top Banner */}
-      <div className="mb-3">
-        <span className="text-[10px] uppercase font-bold tracking-wider text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded border border-blue-500/20">
-          去趣行程資料庫同步
-        </span>
-        <h2 className="text-lg font-bold text-white mt-1">
-          {tripData.title}
-        </h2>
-        <div className="flex flex-wrap items-center gap-3 text-xs text-slate-400 mt-1">
-          <span className="flex items-center gap-1">
-            <User className="w-3.5 h-3.5 text-slate-300" />
-            旅客：{tripData.traveler.name} (獨旅 1 人)
-          </span>
-          <span className="flex items-center gap-1">
-            <Smartphone className="w-3.5 h-3.5 text-slate-300" />
-            裝置：{tripData.traveler.device}
-          </span>
-          <span className="flex items-center gap-1">
-            <Calendar className="w-3.5 h-3.5 text-slate-300" />
-            {tripData.days} 天 4 夜
-          </span>
-        </div>
-      </div>
+    <div className="flex-1 flex flex-col bg-[#F4F7FB]">
+      <ChicHeader subtitle="首爾 5 日行程分析與痛點洞察" />
 
-      {/* AI Journey Risk Insight */}
-      <div className="p-3.5 rounded-2xl bg-amber-950/40 border border-amber-500/40 mb-4 text-xs">
-        <div className="flex items-center gap-2 text-amber-300 font-bold mb-1.5">
-          <AlertTriangle className="w-4 h-4 text-amber-400" />
-          <span>AI 行程風險與弱網痛點分析</span>
-        </div>
-        <p className="text-slate-300 leading-relaxed text-[11px]">
-          分析 Anna 的首爾行程發現：
-          <span className="text-amber-200 font-semibold"> 抵達仁川機場第一時間尚未開通網路</span>，需查詢前往弘大住宿的 AREX 月台與飯店韓文地址；此外聖水洞快閃店人潮眾多、地鐵地下站常有弱網延遲。
-        </p>
-      </div>
-
-      {/* Itinerary Accordion / Overview */}
-      <div className="space-y-2 mb-4">
-        <h3 className="text-xs font-semibold text-slate-300 flex items-center justify-between">
-          <span>首爾 5 日行程亮點與離線焦點</span>
-          <span className="text-[10px] text-slate-500">已關聯旅程守護包</span>
-        </h3>
-
-        {tripData.itinerary.map((day) => (
-          <div
-            key={day.day}
-            className="p-3 rounded-xl bg-slate-900/90 border border-slate-800 text-xs"
-          >
-            <div className="flex items-center justify-between mb-1">
-              <span className="font-bold text-white flex items-center gap-1.5">
-                <span className="w-4 h-4 rounded-full bg-blue-600/30 text-blue-300 text-[10px] flex items-center justify-center font-bold">
-                  {day.day}
-                </span>
-                <span>Day {day.day}・{day.region}</span>
-              </span>
-              <span className="text-[10px] text-slate-400 font-mono">{day.date}</span>
-            </div>
-            <p className="text-slate-300 text-[11px] mb-1.5">{day.summary}</p>
-            <div className="text-[10px] px-2 py-1 rounded bg-slate-950 text-sky-300 border border-slate-800 flex items-center gap-1">
-              <CheckCircle className="w-3 h-3 text-sky-400 shrink-0" />
-              <span>守護包預載重點：{day.offline_pack_focus}</span>
-            </div>
+      <div className="p-4 space-y-4">
+        {/* Trip Summary Card */}
+        <div className="rounded-3xl bg-white p-5 border border-slate-200/90 shadow-sm">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-[11px] font-extrabold px-2.5 py-0.5 rounded-full bg-[#00AEEF]/10 text-[#00AEEF] border border-[#00AEEF]/20">
+              去趣行程資料庫已同步
+            </span>
+            <span className="text-xs text-[#64748B] font-mono">
+              {tripData.trip_id}
+            </span>
           </div>
-        ))}
-      </div>
 
-      {/* Next CTA */}
-      <div className="mt-auto pt-2">
-        <button
-          type="button"
-          onClick={handleNext}
-          className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-sm shadow-lg shadow-blue-500/25 hover:from-blue-500 hover:to-indigo-500 transition-all flex items-center justify-center gap-2 group cursor-pointer"
-        >
-          <span>查看為 Anna 精選的 eSIM 方案</span>
-          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-        </button>
-        <p className="text-[10px] text-slate-400 text-center mt-2">
-          從旅客行程痛點自然帶出 eSIM 價值
-        </p>
+          <h2 className="text-xl font-black text-[#171B28] tracking-tight">
+            {tripData.title}
+          </h2>
+
+          <div className="flex flex-wrap items-center gap-3 text-xs text-[#64748B] mt-2.5 font-medium">
+            <span className="flex items-center gap-1">
+              <User className="w-3.5 h-3.5 text-[#143D5C]" />
+              旅客：{tripData.traveler.name} (獨旅 1 人)
+            </span>
+            <span className="flex items-center gap-1">
+              <Smartphone className="w-3.5 h-3.5 text-[#143D5C]" />
+              裝置：{tripData.traveler.device}
+            </span>
+            <span className="flex items-center gap-1">
+              <Calendar className="w-3.5 h-3.5 text-[#143D5C]" />
+              {tripData.days} 天 4 夜
+            </span>
+          </div>
+        </div>
+
+        {/* AI Journey Risk & Weak-connection Pain Points */}
+        <div className="rounded-3xl bg-[#FEF3C7]/40 p-4 border border-[#F59E0B]/40 shadow-2xs text-xs">
+          <div className="flex items-center gap-2 text-[#D97706] font-extrabold mb-1.5 text-sm">
+            <AlertTriangle className="w-4 h-4 text-[#F59E0B] stroke-[2.5]" />
+            <span>AI 行程風險與網路痛點洞察</span>
+          </div>
+          <p className="text-[#171B28] leading-relaxed font-medium">
+            分析 Anna 的首爾行程發現：
+            <strong className="text-[#D97706]"> 抵達仁川機場第一時間尚未連上網路</strong>，需查詢前往弘大住宿的 AREX 月台與飯店門牌地址；此外聖水洞快閃店人潮眾多、首爾地鐵地下站常有弱網延遲。
+          </p>
+        </div>
+
+        {/* 5-Day Itinerary Highlights */}
+        <div className="space-y-2.5">
+          <div className="flex items-center justify-between px-1">
+            <h3 className="text-xs font-black text-[#171B28] tracking-tight">
+              首爾 5 日亮點與守護包收錄焦點
+            </h3>
+            <span className="text-[11px] font-bold text-[#00AEEF]">
+              已收錄至本機包
+            </span>
+          </div>
+
+          {tripData.itinerary.map((day) => (
+            <div
+              key={day.day}
+              className="rounded-2xl bg-white p-3.5 border border-slate-200/90 shadow-2xs text-xs"
+            >
+              <div className="flex items-center justify-between mb-1">
+                <span className="font-extrabold text-[#171B28] flex items-center gap-2">
+                  <span className="w-5 h-5 rounded-full bg-[#00AEEF] text-white text-[11px] flex items-center justify-center font-bold">
+                    {day.day}
+                  </span>
+                  <span>Day {day.day}・{day.region}</span>
+                </span>
+                <span className="text-[11px] text-[#64748B] font-mono font-medium">
+                  {day.date}
+                </span>
+              </div>
+              <p className="text-[#64748B] text-xs font-medium my-1.5 pl-7">
+                {day.summary}
+              </p>
+              <div className="ml-7 text-[11px] px-2.5 py-1 rounded-xl bg-[#F4F7FB] text-[#143D5C] border border-slate-200 flex items-center gap-1.5 font-semibold">
+                <CheckCircle className="w-3.5 h-3.5 text-[#00AEEF] shrink-0 stroke-[2.5]" />
+                <span>守護包預載重點：{day.offline_pack_focus}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Primary CTA */}
+        <div className="pt-2 pb-4">
+          <PrimaryCTA
+            label="查看為 Anna 精選的 eSIM 方案"
+            onClick={handleNext}
+            variant="blue"
+          />
+          <p className="text-[11px] text-[#64748B] text-center mt-2 font-medium">
+            90 秒展示第 3 站：行程痛點明確化 → 自然帶出 eSIM 流量與離線包價值
+          </p>
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Download, Copy, Check, Sparkles, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Download, Copy, Check, Sparkles, ShieldCheck, MapPin } from 'lucide-react';
+import { ChicHeader } from '../components/ChicHeader';
+import { PrimaryCTA } from '../components/PrimaryCTA';
+import { SectionHeading } from '../components/SectionHeading';
 import { useAppStore } from '../app/store';
 import { analytics } from '../services/analytics';
 
@@ -32,128 +35,140 @@ export const TravelCardPage: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col p-4 bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 overflow-y-auto">
-      {/* Top Header */}
-      <div className="mb-3">
-        <div className="flex items-center justify-between mb-1">
-          <span className="text-[10px] uppercase font-bold tracking-wider text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded border border-purple-500/20">
-            旅後口碑與社群裂變 (Post-trip UGC)
-          </span>
-          <span className="text-[10px] text-slate-400 font-mono">Referral Loop</span>
+    <div className="flex-1 flex flex-col bg-[#F4F7FB]">
+      <ChicHeader subtitle="旅後口碑與好友推薦循環 (UGC Loop)" />
+
+      <div className="p-4 space-y-4">
+        {/* Intro */}
+        <div className="rounded-3xl bg-white p-5 border border-slate-200/90 shadow-sm">
+          <SectionHeading
+            badge="去趣口碑回流機制 (Referral Loop)"
+            badgeColor="orange"
+            title="Anna 的首爾 5 日旅行回憶卡"
+            subtitle="由 AI 旅伴問答與每日行程自動生成・適合截圖與分享至 Instagram Stories 或 LINE"
+          />
         </div>
-        <h2 className="text-lg font-bold text-white">
-          Anna 的首爾 5 日旅行回憶卡
-        </h2>
-        <p className="text-xs text-slate-400 mt-0.5">
-          由 AI 旅伴問答與行程紀錄自動生成・自帶折扣碼吸引好友進入漏斗
-        </p>
-      </div>
 
-      {/* The Social Share Card */}
-      <div className="rounded-3xl p-5 bg-gradient-to-br from-indigo-900/80 via-slate-900 to-purple-950/70 border-2 border-purple-500/40 shadow-2xl relative overflow-hidden mb-4">
-        {/* Glow */}
-        <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-purple-500/20 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-1.5">
-            <span className="font-bold text-white text-xs">去趣 chic trip</span>
-            <span className="text-[10px] px-1.5 py-0.2 rounded bg-purple-500/20 text-purple-300 font-mono">
-              eSIM Companion
+        {/* The Shareable Travel Card (Instagram Story / Post Card aesthetic) */}
+        <div className="rounded-3xl bg-white p-6 border-2 border-[#00AEEF]/40 shadow-lg shadow-slate-200/70 relative overflow-hidden text-[#171B28]">
+          {/* Top brand header bar */}
+          <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
+            <div className="flex items-center gap-2">
+              <span className="font-black text-sm tracking-tight text-[#171B28]">
+                去趣
+              </span>
+              <span className="font-bold text-sm tracking-tight text-[#00AEEF]">
+                chicTrip
+              </span>
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#FFC400]/20 text-[#171B28] font-bold">
+                eSIM Companion
+              </span>
+            </div>
+            <span className="text-xs text-[#64748B] font-semibold flex items-center gap-1">
+              <MapPin className="w-3.5 h-3.5 text-[#FF8614]" />
+              首爾 2026
             </span>
           </div>
-          <span className="text-[11px] text-purple-300 font-medium">Seoul 2026</span>
+
+          {/* Persona & Title */}
+          <div className="my-2">
+            <div className="inline-block px-2.5 py-0.5 rounded-full bg-[#FFC400]/20 text-[#171B28] text-xs font-bold mb-1">
+              ★ {travelProfile.type}
+            </div>
+            <h3 className="text-xl font-black text-[#171B28] leading-tight">
+              首爾巷弄探險與感性記憶
+            </h3>
+            <p className="text-xs text-[#64748B] italic mt-1 font-medium leading-relaxed">
+              「在仁川機場離線時有去趣守護包指引 AREX，在聖水洞快閃店有穩定的 2GB 串流分享！」
+            </p>
+          </div>
+
+          {/* Highlights */}
+          <div className="space-y-2 py-3.5 border-y border-slate-100 text-xs text-[#143D5C] my-3">
+            <div className="flex items-center gap-2">
+              <span className="font-extrabold text-[#00AEEF] shrink-0">Day 1</span>
+              <span>AREX 普通快線 54 分直達弘大 3 號出口</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-extrabold text-[#00AEEF] shrink-0">Day 2</span>
+              <span>景福宮光化門守門將換崗儀式・北村韓屋</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-extrabold text-[#00AEEF] shrink-0">Day 3</span>
+              <span>聖水洞 Dior 概念館快閃與咖啡街街拍</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-extrabold text-[#00AEEF] shrink-0">Day 4</span>
+              <span>南山首爾塔夕陽夜景與明洞購物退稅</span>
+            </div>
+          </div>
+
+          {/* Service Guarantee & Referral Code Badge */}
+          <div className="p-3.5 rounded-2xl bg-[#F4F7FB] border border-slate-200 flex items-center justify-between">
+            <div>
+              <div className="text-[11px] text-[#00AEEF] font-bold flex items-center gap-1">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#18B46B] stroke-[2.5]" />
+                <span>守護旅程：去趣 5 日每日 2GB eSIM</span>
+              </div>
+              <div className="text-sm text-[#171B28] font-mono font-black mt-1">
+                好友推薦碼：<span className="text-[#FF8614]">{referralCode}</span>
+              </div>
+              <div className="text-[10px] text-[#64748B] mt-0.5">
+                好友測驗折 15% ＋ 送離線守護包（Prototype 示範優惠）
+              </div>
+            </div>
+            <div className="w-10 h-10 rounded-2xl bg-[#FFC400]/20 text-[#FF8614] flex items-center justify-center shrink-0">
+              <Sparkles className="w-5 h-5" />
+            </div>
+          </div>
         </div>
 
-        <div className="my-3">
-          <span className="text-[11px] font-semibold text-amber-300 uppercase tracking-wider">
-            ★ {travelProfile.type}
-          </span>
-          <h3 className="text-xl font-black text-white leading-tight mt-0.5">
-            首爾巷弄散策與感性記憶
-          </h3>
-          <p className="text-xs text-slate-300 italic mt-1">
-            「在仁川機場離線時有去趣守護包指引 AREX，在聖水洞快閃店有穩定的 2GB 串流分享！」
+        {/* Action Buttons */}
+        <div className="grid grid-cols-2 gap-2.5">
+          <button
+            type="button"
+            onClick={handleCopyLink}
+            className="h-12 rounded-2xl bg-white hover:bg-slate-50 text-[#171B28] font-bold text-xs border border-slate-200 shadow-2xs flex items-center justify-center gap-2 transition cursor-pointer"
+          >
+            {copied ? (
+              <Check className="w-4 h-4 text-[#18B46B]" />
+            ) : (
+              <Copy className="w-4 h-4 text-[#00AEEF]" />
+            )}
+            <span>{copied ? '已複製推薦連結' : '複製專屬推薦連結'}</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={handleSimulateDownload}
+            className="h-12 rounded-2xl bg-[#00AEEF]/10 hover:bg-[#00AEEF]/20 text-[#00AEEF] font-bold text-xs border border-[#00AEEF]/30 shadow-2xs flex items-center justify-center gap-2 transition cursor-pointer"
+          >
+            {downloaded ? (
+              <Check className="w-4 h-4 text-[#18B46B]" />
+            ) : (
+              <Download className="w-4 h-4" />
+            )}
+            <span>{downloaded ? '已模擬儲存卡片' : '下載限動分享卡'}</span>
+          </button>
+        </div>
+
+        {/* Growth Loop Explanation */}
+        <div className="p-3.5 rounded-2xl bg-white border border-slate-200 text-xs text-[#64748B] leading-relaxed">
+          <span className="font-extrabold text-[#171B28] mr-1">循環機制說明：</span>
+          好友點擊此卡片後，將直接返回「去趣旅行型態測驗」入口，形成「曝光 → 轉換 → 服務 → 口碑」的自驅飛輪。
+        </div>
+
+        {/* Primary CTA to Evidence Dashboard */}
+        <div className="pt-2 pb-4">
+          <PrimaryCTA
+            label="查看黑客松決策儀表板 (Evidence Dashboard)"
+            onClick={() => navigate('/evidence')}
+            variant="ink"
+          />
+          <p className="text-[11px] text-[#64748B] text-center mt-2 font-medium">
+            90 秒展示第 8 站：完整呈現事件漏斗、Klook 差異化分析與決策數據
           </p>
         </div>
-
-        {/* Highlights List */}
-        <div className="space-y-1.5 py-3 border-y border-slate-800 text-xs text-slate-300">
-          <div className="flex items-center gap-1.5">
-            <span className="text-purple-400 font-bold">Day 1</span>
-            <span>AREX 普通快線 54 分直達弘大 3 號出口</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className="text-purple-400 font-bold">Day 2</span>
-            <span>景福宮光化門守門將換崗儀式・北村韓屋</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className="text-purple-400 font-bold">Day 3</span>
-            <span>聖水洞 Dior 概念館快閃與咖啡街街拍</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className="text-purple-400 font-bold">Day 4</span>
-            <span>南山首爾塔夕陽夜景與明洞購物退稅</span>
-          </div>
-        </div>
-
-        {/* eSIM Service Badge & Referral CTA */}
-        <div className="mt-3 p-3 rounded-2xl bg-slate-950/80 border border-purple-500/30 flex items-center justify-between">
-          <div>
-            <div className="text-[10px] text-purple-300 font-semibold flex items-center gap-1">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-              <span>守護旅程：去趣 5 日每日 2GB eSIM</span>
-            </div>
-            <div className="text-xs text-white font-mono font-bold mt-0.5">
-              好友推薦碼：<span className="text-amber-400">{referralCode}</span>
-            </div>
-            <div className="text-[10px] text-slate-400">好友測驗現折 15% ＋ 送離線守護包</div>
-          </div>
-          <div className="p-2 rounded-xl bg-purple-600/20 text-purple-300 shrink-0">
-            <Sparkles className="w-4 h-4" />
-          </div>
-        </div>
-      </div>
-
-      {/* Share Actions */}
-      <div className="grid grid-cols-2 gap-2 mb-4">
-        <button
-          type="button"
-          onClick={handleCopyLink}
-          className="p-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-medium text-xs border border-slate-700 flex items-center justify-center gap-1.5 transition cursor-pointer"
-        >
-          {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-purple-400" />}
-          <span>{copied ? '已複製推薦連結' : '複製專屬推薦連結'}</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={handleSimulateDownload}
-          className="p-3 rounded-xl bg-purple-600/30 hover:bg-purple-600/40 text-purple-200 font-medium text-xs border border-purple-500/40 flex items-center justify-center gap-1.5 transition cursor-pointer"
-        >
-          {downloaded ? <Check className="w-4 h-4 text-emerald-400" /> : <Download className="w-4 h-4" />}
-          <span>{downloaded ? '已模擬儲存卡片' : '下載限動分享卡'}</span>
-        </button>
-      </div>
-
-      {/* Growth Loop Insight */}
-      <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-800 text-[11px] text-slate-400 mb-4 leading-relaxed">
-        <span className="text-purple-300 font-semibold mr-1">循環機制說明：</span>
-        好友點擊此卡片後，將直接返回「去趣旅行型態測驗」入口，形成「曝光 → 轉換 → 服務 → 口碑」的零行銷成本自驅飛輪。
-      </div>
-
-      {/* Next CTA to Decision Dashboard */}
-      <div className="mt-auto pt-2">
-        <button
-          type="button"
-          onClick={() => navigate('/evidence')}
-          className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 text-white font-bold text-sm shadow-lg shadow-purple-500/25 hover:from-purple-500 hover:to-indigo-500 transition-all flex items-center justify-center gap-2 group cursor-pointer"
-        >
-          <span>查看黑客松決策儀表板 (Decision Dashboard)</span>
-          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-        </button>
-        <p className="text-[10px] text-slate-400 text-center mt-2">
-          完整呈現 Demo 數據漏斗與 Architecture A/B/C 評分
-        </p>
       </div>
     </div>
   );

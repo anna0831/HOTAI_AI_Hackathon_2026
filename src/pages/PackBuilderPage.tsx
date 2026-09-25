@@ -1,6 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Download, CheckCircle2, ShieldCheck, Database, ArrowRight, HardDrive } from 'lucide-react';
+import { Download, CheckCircle2, Database, HardDrive, Calendar } from 'lucide-react';
+import { ChicHeader } from '../components/ChicHeader';
+import { PrimaryCTA } from '../components/PrimaryCTA';
+import { SectionHeading } from '../components/SectionHeading';
 import { useAppStore } from '../app/store';
 import packManifest from '../data/pack_manifest.json';
 
@@ -13,157 +16,174 @@ export const PackBuilderPage: React.FC = () => {
   };
 
   const handleEnterCompanion = () => {
-    // When entering the companion killer demo, switch to offline mode automatically to highlight the scenario!
+    // Automatically switch to offline mode to showcase the killer moment!
     setConnectionState('offline');
     navigate('/companion');
   };
 
   const sectionsList = [
-    { id: 'itinerary', label: '首爾 5 日完整每日行程', desc: '各景點停留時間、順序與備用方案' },
-    { id: 'transport', label: 'AREX 機場快線與地鐵指南', desc: '弘大/聖水站出口指示、轉乘要訣' },
-    { id: 'places', label: '住宿與韓屋景點手冊', desc: '弘大 Cozy Stay 門牌、景福宮歷史導覽' },
-    { id: 'esim_help', label: 'eSIM 啟用排錯作業標準', desc: 'APN 設定、漫遊檢查、無網自我修復' },
-    { id: 'emergency', label: '海外緊急應變與求助電話', desc: '韓國 112、119、1330 觀光中文專線' },
-    { id: 'phrases', label: '生存常用韓文短句庫', desc: '洗手間位置、點餐發音對照' },
+    { id: 'itinerary', label: '首爾 5 日完整每日行程', desc: '景點時間、順序、備用方案' },
+    { id: 'transport', label: 'AREX 機場快線與地鐵指南', desc: '弘大 3 號出口、聖水站換乘指示' },
+    { id: 'places', label: '住宿門牌與景福宮文化導覽', desc: '弘大舒適文旅地址、宮闕歷史' },
+    { id: 'esim_help', label: 'eSIM 啟用排錯作業標準', desc: '數據漫遊、APN、無網自救指南' },
+    { id: 'emergency', label: '海外緊急應變與求助電話', desc: '韓國 112、119、1330 觀光中文' },
+    { id: 'phrases', label: '生存常用韓文短句庫', desc: '洗手間位置、發音對照' },
   ];
 
   return (
-    <div className="flex-1 flex flex-col p-4 bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 overflow-y-auto">
-      {/* Header */}
-      <div className="mb-3">
-        <div className="flex items-center justify-between mb-1">
-          <span className="text-[10px] uppercase font-bold tracking-wider text-sky-400 bg-sky-500/10 px-2 py-0.5 rounded border border-sky-500/20">
-            購買後專屬加值服務 (Killer Feature)
-          </span>
-          <span className="text-[10px] text-slate-400 font-mono">v{packManifest.version}</span>
-        </div>
-        <h2 className="text-lg font-bold text-white">
-          {packManifest.title}
-        </h2>
-        <p className="text-xs text-slate-400 mt-0.5">
-          專為 Anna 首爾行打造・體積僅 {packManifest.size_kb} KB・一鍵快取至本機
-        </p>
-      </div>
+    <div className="flex-1 flex flex-col bg-[#F4F7FB]">
+      <ChicHeader subtitle="購買後專屬解鎖・離線旅程守護包" />
 
-      {/* Manifest Meta Box */}
-      <div className="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800 mb-4 grid grid-cols-3 gap-2 text-center text-xs">
-        <div className="p-2 rounded-xl bg-slate-950/60 border border-slate-800">
-          <div className="text-[10px] text-slate-400 mb-0.5 flex items-center justify-center gap-1">
-            <HardDrive className="w-3 h-3 text-sky-400" />
-            <span>檔案大小</span>
-          </div>
-          <div className="font-bold text-white font-mono">{packManifest.size_kb} KB</div>
-        </div>
+      <div className="p-4 space-y-4">
+        {/* Banner with unlocked tone */}
+        <div className="rounded-3xl bg-white p-5 border border-slate-200/90 shadow-sm">
+          <SectionHeading
+            badge="去趣購買後專屬加值服務"
+            badgeColor="yellow"
+            title="已為您解鎖【首爾 5 日離線旅程守護包】"
+            subtitle={`專屬量身打造・體積僅 ${packManifest.size_kb} KB・一鍵快取至手機本機`}
+          />
 
-        <div className="p-2 rounded-xl bg-slate-950/60 border border-slate-800">
-          <div className="text-[10px] text-slate-400 mb-0.5 flex items-center justify-center gap-1">
-            <Database className="w-3 h-3 text-blue-400" />
-            <span>知識段落</span>
-          </div>
-          <div className="font-bold text-white font-mono">{packManifest.total_passages} 筆專屬段落</div>
-        </div>
-
-        <div className="p-2 rounded-xl bg-slate-950/60 border border-slate-800">
-          <div className="text-[10px] text-slate-400 mb-0.5 flex items-center justify-center gap-1">
-            <ShieldCheck className="w-3 h-3 text-emerald-400" />
-            <span>有效期限</span>
-          </div>
-          <div className="font-bold text-white font-mono">2026/10/31</div>
-        </div>
-      </div>
-
-      {/* Download Action Box */}
-      <div className="p-4 rounded-2xl bg-gradient-to-br from-blue-950/40 to-slate-900 border border-blue-500/30 mb-4">
-        <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-2">
-            <div className={`p-2 rounded-xl ${packState.isDownloaded ? 'bg-emerald-500/20 text-emerald-300' : 'bg-blue-600/20 text-blue-300'}`}>
-              {packState.isDownloaded ? <CheckCircle2 className="w-5 h-5" /> : <Download className="w-5 h-5" />}
-            </div>
-            <div>
-              <div className="font-bold text-xs text-white">
-                {packState.isDownloaded ? '離線守護包已下載至手機本機' : '準備建立首爾離線守護包'}
+          {/* Metadata pill boxes */}
+          <div className="grid grid-cols-3 gap-2 text-center text-xs mt-3">
+            <div className="p-3 rounded-2xl bg-[#F4F7FB] border border-slate-200/80">
+              <div className="text-[10px] text-[#64748B] font-bold mb-0.5 flex items-center justify-center gap-1">
+                <HardDrive className="w-3 h-3 text-[#00AEEF]" />
+                <span>檔案大小</span>
               </div>
-              <div className="text-[11px] text-slate-400">
-                {packState.isDownloaded
-                  ? `本機儲存就緒・無網環境可正常檢索`
-                  : '寫入瀏覽器 Storage，斷網零受阻'}
+              <div className="font-black text-[#171B28] font-mono text-sm">
+                {packManifest.size_kb} KB
+              </div>
+            </div>
+
+            <div className="p-3 rounded-2xl bg-[#F4F7FB] border border-slate-200/80">
+              <div className="text-[10px] text-[#64748B] font-bold mb-0.5 flex items-center justify-center gap-1">
+                <Database className="w-3 h-3 text-[#FF8614]" />
+                <span>知識段落</span>
+              </div>
+              <div className="font-black text-[#171B28] font-mono text-sm">
+                {packManifest.total_passages} 筆
+              </div>
+            </div>
+
+            <div className="p-3 rounded-2xl bg-[#F4F7FB] border border-slate-200/80">
+              <div className="text-[10px] text-[#64748B] font-bold mb-0.5 flex items-center justify-center gap-1">
+                <Calendar className="w-3 h-3 text-[#18B46B]" />
+                <span>有效期限</span>
+              </div>
+              <div className="font-black text-[#171B28] font-mono text-sm">
+                2026/10/31
               </div>
             </div>
           </div>
+        </div>
 
-          {packState.isDownloaded && (
-            <button
-              type="button"
-              onClick={resetPack}
-              className="text-[10px] text-slate-400 hover:text-slate-200 underline"
-            >
-              重新下載
-            </button>
+        {/* Download Action Box */}
+        <div className="rounded-3xl bg-white p-5 border-2 border-[#00AEEF]/40 shadow-sm">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2.5">
+              <div
+                className={`w-10 h-10 rounded-2xl flex items-center justify-center ${
+                  packState.isDownloaded
+                    ? 'bg-[#E6F9F0] text-[#18B46B]'
+                    : 'bg-[#E0F4FC] text-[#00AEEF]'
+                }`}
+              >
+                {packState.isDownloaded ? (
+                  <CheckCircle2 className="w-6 h-6 stroke-[2.5]" />
+                ) : (
+                  <Download className="w-5 h-5 stroke-[2.5]" />
+                )}
+              </div>
+              <div>
+                <div className="font-black text-sm text-[#171B28]">
+                  {packState.isDownloaded
+                    ? '守護包已下載至手機本機'
+                    : '準備下載專屬守護包'}
+                </div>
+                <div className="text-xs text-[#64748B] font-medium">
+                  {packState.isDownloaded
+                    ? '本機快取就緒・離線斷網零受阻'
+                    : '寫入瀏覽器 Storage，斷網隨時查'}
+                </div>
+              </div>
+            </div>
+
+            {packState.isDownloaded && (
+              <button
+                type="button"
+                onClick={resetPack}
+                className="text-xs text-[#64748B] hover:text-[#171B28] underline font-bold cursor-pointer"
+              >
+                重新下載
+              </button>
+            )}
+          </div>
+
+          {/* Progress bar */}
+          {packState.downloadProgress > 0 && packState.downloadProgress < 100 && (
+            <div className="w-full bg-slate-100 rounded-full h-2.5 mb-3 overflow-hidden">
+              <div
+                className="bg-[#00AEEF] h-2.5 rounded-full transition-all duration-300"
+                style={{ width: `${packState.downloadProgress}%` }}
+              />
+            </div>
+          )}
+
+          {!packState.isDownloaded ? (
+            <PrimaryCTA
+              label="立即下載守護包至本機 (680 KB)"
+              onClick={handleDownload}
+              variant="blue"
+              icon={<Download className="w-4 h-4" />}
+            />
+          ) : (
+            <div className="text-xs font-bold text-[#18B46B] bg-[#E6F9F0] border border-[#18B46B]/30 rounded-2xl p-3 flex items-center justify-between">
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 shrink-0 stroke-[2.5]" />
+                <span>本機已持久化儲存・離線模式隨時可用</span>
+              </span>
+              <span className="text-xs font-mono font-black">READY</span>
+            </div>
           )}
         </div>
 
-        {/* Progress bar */}
-        {packState.downloadProgress > 0 && packState.downloadProgress < 100 && (
-          <div className="w-full bg-slate-800 rounded-full h-2 mb-2 overflow-hidden">
+        {/* Included Modules Checklist */}
+        <div className="rounded-3xl bg-white p-4 border border-slate-200/90 shadow-sm space-y-2">
+          <h3 className="text-xs font-black text-[#171B28] mb-2 px-1">
+            守護包收錄之 6 大離線常備模組
+          </h3>
+          {sectionsList.map((sec) => (
             <div
-              className="bg-blue-500 h-2 rounded-full transition-all duration-300"
-              style={{ width: `${packState.downloadProgress}%` }}
-            />
-          </div>
-        )}
-
-        {!packState.isDownloaded ? (
-          <button
-            type="button"
-            onClick={handleDownload}
-            className="w-full mt-2 py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow cursor-pointer"
-          >
-            <Download className="w-4 h-4" />
-            <span>立即下載守護包至本機 (680 KB)</span>
-          </button>
-        ) : (
-          <div className="text-[11px] text-emerald-400 bg-emerald-950/40 border border-emerald-500/30 rounded-xl p-2.5 flex items-center justify-between mt-2">
-            <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
-              <span>本機已持久化儲存・離線模式隨時可用</span>
-            </span>
-            <span className="text-[10px] text-emerald-300/80 font-mono">OK</span>
-          </div>
-        )}
-      </div>
-
-      {/* Sections List */}
-      <div className="space-y-2 mb-4">
-        <h3 className="text-xs font-semibold text-slate-300">守護包收錄模組清單</h3>
-        {sectionsList.map((sec) => (
-          <div
-            key={sec.id}
-            className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800/80 flex items-center justify-between text-xs"
-          >
-            <div>
-              <div className="font-semibold text-slate-200 text-[11px]">{sec.label}</div>
-              <div className="text-[10px] text-slate-400">{sec.desc}</div>
+              key={sec.id}
+              className="p-3 rounded-2xl bg-[#F4F7FB] border border-slate-200/80 flex items-center justify-between text-xs"
+            >
+              <div>
+                <div className="font-extrabold text-[#171B28] text-xs">
+                  {sec.label}
+                </div>
+                <div className="text-[11px] text-[#64748B] mt-0.5">
+                  {sec.desc}
+                </div>
+              </div>
+              <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-white text-[#00AEEF] border border-[#00AEEF]/20 font-mono shadow-2xs">
+                收錄完備
+              </span>
             </div>
-            <span className="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-sky-400 border border-slate-700 font-mono">
-              Ready
-            </span>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
 
-      {/* Next CTA */}
-      <div className="mt-auto pt-2">
-        <button
-          type="button"
-          onClick={handleEnterCompanion}
-          className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 text-white font-bold text-sm shadow-lg shadow-blue-500/25 hover:from-sky-400 hover:to-blue-500 transition-all flex items-center justify-center gap-2 group cursor-pointer"
-        >
-          <span>進入 AI 旅伴實測（模擬抵達仁川機場）</span>
-          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-        </button>
-        <p className="text-[10px] text-slate-400 text-center mt-2">
-          點擊後自動切換至「離線保護模式」驗證 Killer Moment
-        </p>
+        {/* Primary CTA to Companion */}
+        <div className="pt-2 pb-4">
+          <PrimaryCTA
+            label="進入 AI 旅伴實測（模擬抵達仁川機場）"
+            onClick={handleEnterCompanion}
+            variant="orange"
+          />
+          <p className="text-[11px] text-[#64748B] text-center mt-2 font-medium">
+            90 秒展示第 5 站：點擊後自動切換至「離線保護模式」驗證 Killer Moment
+          </p>
+        </div>
       </div>
     </div>
   );
