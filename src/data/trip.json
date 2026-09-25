@@ -1,0 +1,171 @@
+{
+  "trip_id": "seoul-demo-001",
+  "destination": "首爾 (Seoul)",
+  "title": "首爾初次自由行・5天4夜城市漫遊",
+  "days": 5,
+  "start_date": "2026-10-15",
+  "end_date": "2026-10-19",
+  "traveler": {
+    "name": "Anna",
+    "party_size": 1,
+    "device": "iPhone 15 Pro",
+    "usage_profile": ["maps", "messaging", "social_upload", "translation"]
+  },
+  "itinerary": [
+    {
+      "day": 1,
+      "date": "2026-10-15",
+      "region": "仁川機場 → 弘大",
+      "title": "首爾抵達與弘大探索",
+      "summary": "搭乘 AREX 快捷抵達弘大飯店入住，傍晚漫步弘大商圈街頭表演。",
+      "offline_pack_focus": "機場交通、住宿地址、eSIM 啟用指南",
+      "items": [
+        {
+          "id": "item-1-1",
+          "time": "14:30",
+          "title": "抵達仁川國際機場 (ICN)",
+          "category": "transport",
+          "location": "仁川機場第 1 航廈",
+          "note": "辦理入境與行李提領，啟用去趣 eSIM。"
+        },
+        {
+          "id": "item-1-2",
+          "time": "15:30",
+          "title": "搭乘 AREX 機場快線普通車至弘大入口站",
+          "category": "transport",
+          "location": "AREX 乘車月台",
+          "note": "約 54 分鐘直達弘大入口站。"
+        },
+        {
+          "id": "item-1-3",
+          "time": "16:45",
+          "title": "入住弘大舒適文旅 (Hongdae Cozy Stay)",
+          "category": "hotel",
+          "location": "首爾市麻浦區楊花路 160 號（弘大入口站 3 號出口步行 3 分鐘）",
+          "note": "訂房代號：QC-20261015-KR"
+        },
+        {
+          "id": "item-1-4",
+          "time": "18:30",
+          "title": "弘大街頭散策與烤五花肉",
+          "category": "food",
+          "location": "弘大步行街 (Hongdae Walking Street)",
+          "note": "品嚐知名老橋烤肉，欣賞街頭音樂表演。"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "date": "2026-10-16",
+      "region": "景福宮、北村、益善洞",
+      "title": "朝鮮王朝古韻與文青韓屋聚落",
+      "summary": "穿韓服暢遊景福宮，漫步北村八景，在益善洞韓屋茶室小憩。",
+      "offline_pack_focus": "景點介紹、基本交通、韓文短句",
+      "items": [
+        {
+          "id": "item-2-1",
+          "time": "09:30",
+          "title": "景福宮與衛兵交接儀式",
+          "category": "attraction",
+          "location": "景福宮 (光化門站 2 號出口 / 景福宮站 5 號出口)",
+          "note": "10:00 光化門守門將換崗儀式。"
+        },
+        {
+          "id": "item-2-2",
+          "time": "13:30",
+          "title": "北村韓屋村八景攝影",
+          "category": "attraction",
+          "location": "北村韓屋村 (安國站 2 號出口)",
+          "note": "請保持安靜，體驗傳統貴族聚落。"
+        },
+        {
+          "id": "item-2-3",
+          "time": "16:00",
+          "title": "益善洞文創街區散策",
+          "category": "food",
+          "location": "益善洞 (鐘路 3 街站 4 號出口)",
+          "note": "韓屋復古咖啡廳甜點品嚐。"
+        }
+      ]
+    },
+    {
+      "day": 3,
+      "date": "2026-10-17",
+      "region": "聖水洞、首爾林",
+      "title": "潮流工業風咖啡聚落與綠意森呼吸",
+      "summary": "造訪首爾當紅文創地標聖水洞，走訪快閃店、選物店與首爾林銀杏道。",
+      "offline_pack_focus": "行程順序、地鐵出口、備用景點",
+      "items": [
+        {
+          "id": "item-3-1",
+          "time": "10:30",
+          "title": "聖水洞潮流工廠與香氛選品",
+          "category": "shopping",
+          "location": "聖水洞 (地鐵 2 號線聖水站 3 號或 4 號出口)",
+          "note": "造訪 Dior 聖水概念館、Tamburins 及紅磚咖啡街。"
+        },
+        {
+          "id": "item-3-2",
+          "time": "14:30",
+          "title": "首爾林漫步野餐",
+          "category": "attraction",
+          "location": "首爾林 (水仁盆唐線首爾林站 3 號出口)",
+          "note": "首爾市中心大片秋季林蔭公園。"
+        }
+      ]
+    },
+    {
+      "day": 4,
+      "date": "2026-10-18",
+      "region": "明洞、南山首爾塔",
+      "title": "經典購物繁華與南山浪漫夜景",
+      "summary": "明洞美妝與伴手禮掃貨，搭乘南山纜車俯瞰首爾繁華全景。",
+      "offline_pack_focus": "購物資訊、退稅提示、交通指南",
+      "items": [
+        {
+          "id": "item-4-1",
+          "time": "11:00",
+          "title": "明洞商圈購物與退稅",
+          "category": "shopping",
+          "location": "明洞站 6 號出口",
+          "note": "消費滿 15,000 韓元即可享即時免稅退稅。"
+        },
+        {
+          "id": "item-4-2",
+          "time": "17:30",
+          "title": "南山首爾塔夕陽與夜景",
+          "category": "attraction",
+          "location": "南山首爾塔 (明洞站搭 01 循環公車或纜車)",
+          "note": "掛愛情鎖與 360 度觀景台俯瞰首爾。"
+        }
+      ]
+    },
+    {
+      "day": 5,
+      "date": "2026-10-19",
+      "region": "弘大 → 仁川機場",
+      "title": "最後巡禮與溫馨返程",
+      "summary": "弘大早餐巡禮、採買伴手禮，前往仁川機場搭機返回台北。",
+      "offline_pack_focus": "回程交通、航廈提醒、緊急資訊",
+      "items": [
+        {
+          "id": "item-5-1",
+          "time": "10:30",
+          "title": "弘大延南洞林蔭道早午餐",
+          "category": "food",
+          "location": "弘大入口站 3 號出口京義線林蔭道",
+          "note": "享用美味可頌與手沖咖啡。"
+        },
+        {
+          "id": "item-5-2",
+          "time": "13:00",
+          "title": "弘大入口搭乘 AREX 直達仁川機場",
+          "category": "transport",
+          "location": "弘大入口站 AREX 月台",
+          "note": "確認航班航廈（第一航廈或第二航廈）。"
+        }
+      ]
+    }
+  ],
+  "mock": true
+}

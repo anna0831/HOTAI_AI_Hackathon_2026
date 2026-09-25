@@ -1,0 +1,101 @@
+{
+  "items": [
+    {
+      "id": "transport-incheon-hongdae",
+      "type": "transport",
+      "title": "仁川機場到弘大住宿交通方式",
+      "content": "從仁川國際機場（T1 或 T2）前往弘大住宿，最推薦搭乘【AREX 機場快線普通列車（All-stop Train）】。直達弘大入口站（Hongik Univ. Station）車程約 54 分鐘，刷 T-money 卡約 4,050 韓元。抵達弘大入口站後，由【3 號出口】出站，沿楊花路直行步行約 3 分鐘即可抵達弘大舒適文旅（Hongdae Cozy Stay）。",
+      "keywords": ["仁川", "機場", "弘大", "AREX", "住宿", "交通", "前往", "怎麼去", "飯店", "抵達"],
+      "freshness": "stable",
+      "updated_at": "2026-09-20T00:00:00Z",
+      "source_label": "首爾旅程守護包・交通手冊",
+      "confidence_hint": "高信心度（個人行程交通預載）",
+      "mock": true
+    },
+    {
+      "id": "hotel-hongdae-address",
+      "type": "places",
+      "title": "弘大住宿資訊與地址",
+      "content": "Anna 的首爾住宿為【弘大舒適文旅 (Hongdae Cozy Stay)】。\n地址：首爾特別市麻浦區楊花路 160 號（서울특별시 마포구 양화로 160）。\n交通指示：地鐵 2 號線 / 機場快線 AREX【弘大入口站】3 號出口出來後直行約 200 公尺（步行約 3 分鐘）。\n訂房確認號：QC-20261015-KR，入住時間為下午 15:00 後，前台支援 24 小時行李寄放。",
+      "keywords": ["住宿", "地址", "飯店", "住哪", "弘大", "旅館", "Cozy", "Stay", "麻浦區", "門牌"],
+      "freshness": "personal",
+      "updated_at": "2026-09-20T00:00:00Z",
+      "source_label": "首爾旅程守護包・個人預訂明細",
+      "confidence_hint": "高信心度（旅客個人訂房資訊）",
+      "mock": true
+    },
+    {
+      "id": "itinerary-tomorrow-day2",
+      "type": "itinerary",
+      "title": "Day 2 行程安排：景福宮、北村韓屋村、益善洞",
+      "summary": "Day 2 主題為朝鮮王朝古韻與文青韓屋聚落。",
+      "content": "明天（Day 2）的行程重點如下：\n1. 上午 09:30【景福宮】：欣賞 10:00 光化門守門將換崗交接儀式，體驗穿韓服免費入宮。\n2. 下午 13:30【北村韓屋村】：漫步安國站傳統貴族韓屋聚落，尋找北村八景拍攝視角。\n3. 傍晚 16:00【益善洞】：穿梭復古文創胡同，享受韓屋特色咖啡館與文青小店。\n建議交通：搭乘地鐵 3 號線至景福宮站 5 號出口或安國站。",
+      "keywords": ["明天", "第二天", "Day 2", "行程", "景點", "景福宮", "北村", "益善洞", "安國", "安排"],
+      "freshness": "personal",
+      "updated_at": "2026-09-20T00:00:00Z",
+      "source_label": "首爾旅程守護包・每日行程清單",
+      "confidence_hint": "高信心度（預先規劃行程）",
+      "mock": true
+    },
+    {
+      "id": "attraction-gyeongbokgung-history",
+      "type": "places",
+      "title": "景福宮歷史與參訪導覽",
+      "content": "景福宮建於 1395 年（朝鮮太祖時期），是朝鮮五大宮闕中規模最大、歷史最悠久的正宮，名稱取自《詩經》「君子萬年，介爾景福」，象徵祈求國家太平安康。宮內著名建築包括國王登基與接見外使的【勤政殿】、建於池中的水上樓閣【慶會樓】。光化門前每日 10:00 及 14:00 會舉行重現朝鮮時代的守門將交接換崗儀式（每次約 20 分鐘）。",
+      "keywords": ["景福宮", "歷史", "由來", "光化門", "朝鮮", "慶會樓", "勤政殿", "介紹", "故事", "換崗"],
+      "freshness": "stable",
+      "updated_at": "2026-09-20T00:00:00Z",
+      "source_label": "首爾旅程守護包・文化景點手冊",
+      "confidence_hint": "高信心度（人文古蹟背景知識庫）",
+      "mock": true
+    },
+    {
+      "id": "transport-seongsu-station",
+      "type": "transport",
+      "title": "聖水洞前往交通與地鐵站出口",
+      "content": "前往聖水洞（Seongsu-dong）應搭乘【首爾地鐵 2 號線】（綠色線），在【聖水站 (Seongsu Station / 성수역)】下車。\n主要景點出口指示：\n- 聖水站【3 號或 4 號出口】：前往 Dior 聖水概念館、紅磚工業風咖啡街、Tamburins 及流行快閃店聚落。\n- 若要去首爾林（Seoul Forest），可在聖水站步行約 15 分鐘，或搭乘水仁盆唐線至【首爾林站】3 號出口。",
+      "keywords": ["聖水洞", "哪一站", "地鐵", "下車", "出口", "聖水站", "2號線", "首爾林", "Dior"],
+      "freshness": "stable",
+      "updated_at": "2026-09-20T00:00:00Z",
+      "source_label": "首爾旅程守護包・地鐵交通指南",
+      "confidence_hint": "高信心度（首爾地鐵靜態站點資料）",
+      "mock": true
+    },
+    {
+      "id": "esim-troubleshooting-guide",
+      "type": "esim_help",
+      "title": "eSIM 無法連線／啟用排錯指南",
+      "content": "若抵達韓國後 eSIM 顯示沒有服務或無法上網，請依序執行 4 步排錯：\n1. 【檢查數據漫遊】：前往手機「設定」→「行動服務」→ 點選該去趣 eSIM 方案，確認【開啟數據漫遊 (Data Roaming)】已開啟。\n2. 【確認行動數據主要號碼】：確認「行動數據」的選定線路為該張去趣 eSIM。\n3. 【重新開機】：將手機重新開機，讓手機基頻重新搜尋並註冊韓國當地電信網路（SK Telecom 或 KT）。\n4. 【檢查 APN 設定】：通常自動設定，若顯示異常，APN 名稱請確認為「internet」且無空格。\n若嘗試後仍無法連線，可於有機場免費 Wi-Fi 時點擊去趣 App 智能客服即時協助。",
+      "keywords": ["eSIM", "連不上", "沒訊號", "排錯", "檢查", "沒有服務", "無法上網", "開通", "漫遊", "啟用"],
+      "freshness": "stable",
+      "updated_at": "2026-09-20T00:00:00Z",
+      "source_label": "去趣 eSIM 技術支援中心",
+      "confidence_hint": "高信心度（官方標準故障排除作業標準）",
+      "mock": true
+    },
+    {
+      "id": "emergency-hotlines-korea",
+      "type": "emergency",
+      "title": "韓國緊急聯絡電話與求助管道",
+      "content": "在韓國遇突發狀況之緊急電話彙整：\n- 犯罪報警：撥打 【112】\n- 火警、緊急救護車：撥打 【119】\n- 韓國觀光諮詢與翻譯求助（支援中文 / 24 小時免費）：撥打 【1330】（在韓國手機直撥 1330 即可）\n- 駐韓國台北代表部（急難救助專線）：+82-10-9080-2761（僅供車禍、重病、護照遺失等緊急求助）\n- 韓國緊急醫療諮詢：撥打 1339",
+      "keywords": ["緊急", "電話", "求助", "報警", "救護車", "112", "119", "1330", "代表部", "醫院", "遺失"],
+      "freshness": "stable",
+      "updated_at": "2026-09-20T00:00:00Z",
+      "source_label": "首爾旅程守護包・海外緊急應變手冊",
+      "confidence_hint": "高信心度（官方緊急應變常備電話）",
+      "mock": true
+    },
+    {
+      "id": "korean-phrase-toilet",
+      "type": "phrases",
+      "title": "常用實用韓文短句：詢問洗手間位置",
+      "content": "「請問洗手間在哪裡？」的韓文如下：\n- 韓文原文：【화장실이 어디예요?】\n- 羅馬拼音：[ Hwa-jang-sil-i eo-di-ye-yo? ]\n- 中文諧音發音：「花將西里 歐底也優？」\n【進階提示】：也可以直接給店員看這句話，或簡短說「화장실? (Hwajangsil?)」，對方即會指引方向。",
+      "keywords": ["洗手間", "廁所", "在哪裡", "韓文", "怎麼說", "發音", "化妝室", "화장실"],
+      "freshness": "stable",
+      "updated_at": "2026-09-20T00:00:00Z",
+      "source_label": "首爾旅程守護包・生存實用韓語手冊",
+      "confidence_hint": "高信心度（雙語實用語句庫）",
+      "mock": true
+    }
+  ]
+}

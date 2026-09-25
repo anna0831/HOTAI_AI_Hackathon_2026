@@ -1,0 +1,57 @@
+{
+  "plans": [
+    {
+      "plan_id": "kr-5d-daily2gb",
+      "name": "韓國 5 日・每日 2GB 高速型",
+      "type": "daily",
+      "data_allowance": "每日 2GB（超過降速 128kbps 吃到飽，隔日刷新）",
+      "duration_days": 5,
+      "price_twd": 299,
+      "original_price_twd": 420,
+      "highlight_badge": "最適合您的推薦",
+      "rules": ["days<=5", "maps", "social_upload"],
+      "recommended_reason": "根據您的 5 天首爾行程，預計穿梭弘大、聖水洞打卡點，每日 2GB 足夠全天導航地圖與高畫質照片即時分享，安心無流量焦慮！",
+      "features": [
+        "贈送【首爾 5 日離線旅程守護包】（無網環境仍可查行程與交通）",
+        "SK Telecom 頂級原生線路，地鐵與地下街訊號超穩",
+        "支援熱點分享，隨裝隨用免換實體卡",
+        "去趣 24 小時在線智能排錯小幫手"
+      ],
+      "mock": true
+    },
+    {
+      "plan_id": "kr-5d-total10gb",
+      "name": "韓國 5 日・總量 10GB 輕量型",
+      "type": "total",
+      "data_allowance": "5 天累計 10GB 高速流量（用完斷網）",
+      "duration_days": 5,
+      "price_twd": 249,
+      "original_price_twd": 350,
+      "rules": ["days<=5", "messaging", "maps"],
+      "recommended_reason": "若平時主要使用通訊軟體與查看地圖、回到飯店連 Wi-Fi，10GB 總量方案最經濟實惠。",
+      "features": [
+        "贈送【首爾 5 日離線旅程守護包】",
+        "KT 原生優質網路",
+        "價格最親民，小資獨旅首選"
+      ],
+      "mock": true
+    },
+    {
+      "plan_id": "kr-5d-unlimited",
+      "name": "韓國 5 日・真吃到飽旗艦型",
+      "type": "unlimited",
+      "data_allowance": "5 天全程無限高速不降速吃到飽",
+      "duration_days": 5,
+      "price_twd": 449,
+      "original_price_twd": 580,
+      "rules": ["days<=5", "video_streaming", "hotspot"],
+      "recommended_reason": "適合需要重度短影音直播、遠端會議或多台設備隨時熱點分享的旗艦旅客。",
+      "features": [
+        "贈送【首爾 5 日離線旅程守護包】",
+        "SK Telecom / LG U+ 雙電信切換",
+        "無限流量不降速，直播暢快無阻"
+      ],
+      "mock": true
+    }
+  ]
+}

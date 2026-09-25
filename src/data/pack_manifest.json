@@ -1,0 +1,20 @@
+{
+  "pack_id": "seoul-demo-001-v1",
+  "trip_id": "seoul-demo-001",
+  "title": "首爾自由行 5 日離線旅程守護包",
+  "destination": "首爾 (Seoul)",
+  "version": "1.0.0",
+  "generated_at": "2026-09-25T00:00:00Z",
+  "valid_until": "2026-10-31T23:59:59Z",
+  "size_kb": 680,
+  "total_passages": 8,
+  "sections": [
+    "itinerary",
+    "transport",
+    "places",
+    "esim_help",
+    "emergency",
+    "phrases"
+  ],
+  "mock": true
+}
