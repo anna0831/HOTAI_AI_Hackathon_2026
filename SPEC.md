@@ -38,9 +38,9 @@
 3. 依行程推薦 eSIM 方案、專屬促銷訊息與推薦理由。
 4. 明確的方案選擇／模擬購買 CTA。
 5. 購買後建立／下載 Seoul Travel Pack。
-6. Online／Poor Connection／Offline 模式切換。
-7. 本機資料檢索、離線回答與即時問題安全 Routing。
-8. 旅後生成一張可分享的 AI Travel Card，帶有去趣 eSIM CTA。
+6. Online／Offline 雙模式切換（已移除弱網模式，保留離線保護與即時攔截）。
+7. 本機資料檢索、離線回答與即時問題安全 Routing（離線不聯網、不產生幻覺）。
+8. 旅後生成可預覽與下載的 1080×1920 Travel DNA 限動分享卡，帶有去趣 eSIM 推薦碼與 Threads 分享。
 
 ### Should Have
 

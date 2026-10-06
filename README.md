@@ -14,7 +14,7 @@
 
 ```
    ┌────────────────────────────────────────────────────────┐
-   │ 網路環境模擬： [ 4G/5G 線上 ]  [ 弱網 ]  [ 離線保護模式 ] │
+   │ 網路環境模擬： [ 4G/5G 線上 ]       [ 離線保護模式 ]   │
    ├────────────────────────────────────────────────────────┤
    │                                                        │
    │           📱 去趣 chic trip Mobile Prototype           │
@@ -47,13 +47,13 @@
 - **點擊**：點擊「**查看首爾 5 日行程與推薦 eSIM**」。
 - **論證焦點**：從情感認同自然導向商品頁，消除規格認知障礙。
 
-### Step 3｜行程洞察與弱網痛點分析（23 秒）
+### Step 3｜行程洞察與斷網痛點分析
 - **路由**：[`/trip`](http://localhost:5173/trip)
-- **展示**：載入首爾 5 日行程，AI 標註行程風險：**「抵達仁川機場第一時間尚未連線，需查弘大交通與住宿地址」**。
+- **展示**：載入首爾 5 日行程，AI 標註行程風險：**「抵達仁川機場第一時間尚未連線，需查弘大交通與住宿地址」**，行程狀態標註「**已儲存行程**」。
 - **點擊**：點擊「**查看為 Anna 精選的 eSIM 方案**」。
 - **論證焦點**：將離線需求包裝為具體行程痛點，為後續服務加值鋪陳。
 
-### Step 4｜精準 eSIM 導購（23–35 秒）
+### Step 4｜精準 eSIM 導購
 - **路由**：[`/esim`](http://localhost:5173/esim)
 - **展示**：情境化推薦「**韓國 5 日・每日 2GB 高速型**（NT$ 299）」。
   - *推薦理由*：「因穿梭弘大與聖水洞打卡點，每日 2GB 足夠全天導航地圖與高畫質照片即時分享！」
@@ -61,31 +61,31 @@
 - **點擊**：點擊「**確認選擇此方案**」。
 - **論證焦點**：明確的轉換點擊 CTA，將離線服務轉化為促購差異化 Killer Benefit。
 
-### Step 5｜解鎖並下載離線旅程包（35–45 秒）
+### Step 5｜解鎖並下載離線旅程包
 - **路由**：[`/pack`](http://localhost:5173/pack)
-- **展示**：檢視 680 KB 守護包規格（行程、交通、住宿、eSIM 排錯、緊急電話、實用韓文）。
+- **展示**：檢視 680 KB 守護包規格（行程、交通、住宿、eSIM 排錯、緊急電話、實用韓文，共 8 題內建問題）。
 - **操作**：點擊「**立即下載守護包至本機 (680 KB)**」，見證進度條將資料快取至 `localStorage`。
 - **點擊**：點擊「**進入 AI 旅伴實測（模擬抵達仁川機場）**」。
 - **論證焦點**：系統自動無縫切換為「離線保護模式」，直擊落地無網情境。
 
-### Step 6｜離線 AI 旅伴問答與時效性閘道（45–82 秒）
+### Step 6｜離線 AI 旅伴問答與時效性閘道
 - **路由**：[`/companion`](http://localhost:5173/companion)
 - **情境 1（本機離線查詢）**：
-  - 點擊快捷問題「✈️ **機場到弘大交通**」或「🏨 **住宿地址與門牌**」。
+  - 點擊快捷問題卡片「✈️ **機場到弘大交通**」或「🏨 **住宿地址與門牌**」（標記「離線可用」淡青綠背景）。
   - 👉 **驗證**：毫秒級回傳答案（AREX 機場快線普通車、弘大 3 號出口步行 3 分鐘、弘大舒適文旅地址），顯示「**已使用離線旅程包 (本機檢索)**」與資料來源引用卡。
 - **情境 2（時效性安全攔截・防幻覺）**：
-  - 點擊「⚠️ **AREX 即時延誤？**」或「🌤️ **現在首爾幾度？**」。
-  - 👉 **驗證**：系統精準辨識即時字眼，**離線模式下嚴格不呼叫網路，亦不拿舊資料亂答**！自動攔截並顯示「**時效性安全閘道・已排入待連線清單**」。
+  - 檢視問題卡片「⚠️ **AREX 即時延誤？**」或「🌤️ **現在首爾幾度？**」（標記「需要網路」，離線時顯示「連線後可查詢」不可點擊）。
+  - 👉 **驗證**：若離線輸入即時問題，系統精準辨識即時字眼，**離線模式下嚴格不呼叫網路，亦不拿舊資料亂答**！自動攔截並顯示「**時效性安全閘道・已排入待連線清單**」。
 - **情境 3（恢復連線與 Reconnect）**：
   - 點擊頂部「**切換至 Online**」。
   - 待連線清單提示「網路已恢復」，點擊「**取得最新即時資訊**」。
   - 👉 **驗證**：切換為「**已取得最新即時資訊 (Live Adapter)**」，即時顯示全線正常營運通報與 18°C 氣象廳數據。
 - **點擊**：點擊「**生成旅後 AI Travel Card (進入分享閉環)**」。
 
-### Step 7｜旅後社群分享卡與推薦回流（82–90 秒）
+### Step 7｜旅後社群分享卡與推薦回流
 - **路由**：[`/share`](http://localhost:5173/share)
-- **展示**：AI 自動彙整首爾行程亮點，產出高質感社群圖卡，帶有專屬推薦碼 **`CHIC-ANNA-KR`**（好友享 85 折優惠）。
-- **操作**：點擊「複製專屬推薦連結」或「下載限動分享卡」。
+- **展示**：AI 自動彙整首爾行程亮點，產出高質感社群圖卡，帶有專屬推薦碼 **`CHIC-ANNA-KR`**；並提供 3 款 9:16 Travel DNA 限動卡（首爾・城市探險、大阪・美食療癒、北海道・自然慢遊），支援 1080×1920 PNG 下載與分享。
+- **操作**：點擊「複製專屬推薦連結」、「下載分享卡」或「分享至 Threads 或系統」。
 - **論證焦點**：好友點擊後返回 Step 1 測驗，形成曝光 → 轉換 → 服務 → 分享的零成本循環飛輪。
 
 ### Step 8｜黑客松決策儀表板（90 秒總結）
@@ -150,7 +150,7 @@ npm install
 # 3. 啟動本機開發伺服器 (開啟 http://localhost:5173/)
 npm run dev
 
-# 4. 執行 17 組單元與整合測試 (含本機檢索與時效分類驗證)
+# 4. 執行 31 組單元與整合測試 (含本機檢索、時效分類、複選遷移與問題卡片連線規範)
 npm run test
 
 # 5. 執行 TypeScript 嚴格型別檢查
@@ -167,37 +167,46 @@ npm run build
 ```text
 src/
 ├── app/
-│   ├── App.tsx                       # 全域 Layout（手機外框、頂部連線模擬列、Demo 導航）
+│   ├── App.tsx                       # 全域 Layout（手機外框、頂部連線模擬列、導航）
 │   ├── router.tsx                    # 8 個核心 Route 設定
-│   └── store.ts                      # Zustand 狀態管理（連線模式、Pack 狀態、待連線查詢、Demo 步進）
+│   └── store.ts                      # Zustand 狀態管理（Online/Offline、複選方案、Pack 狀態、待連線查詢）
 ├── components/
-│   ├── ConnectionStatus.tsx          # Online / Poor Connection / Offline 模擬膠囊
-│   ├── DemoStepper.tsx               # 90 秒展示引導與快捷跳轉
+│   ├── OfflineStatusBar.tsx          # 4G/5G 線上 / 離線保護模式 雙態切換膠囊
+│   ├── ChicBottomNav.tsx             # 成長漏斗步進引導與跳轉（無展示秒數與 Demo Mode）
+│   ├── TravelDnaStoryCards.tsx       # 3 款 9:16 Travel DNA 限動卡（預覽、Threads分享、1080×1920 PNG輸出）
 │   ├── SourceCard.tsx                # 回答來源、資料更新時間與信心度標籤
 │   ├── FreshnessBadge.tsx            # 時效性狀態（已使用離線包 / 等待連線 / 已取得最新資訊）
 │   └── MobileFrame.tsx               # 質感手機模擬展示外框
 ├── domain/
 │   ├── trip.ts                       # Trip, Traveler, ItineraryDay 介面
 │   ├── pack.ts                       # PackManifest, KnowledgeItem 介面
-│   ├── query.ts                      # Query, Classification, QueryResult, FreshnessStatus
+│   ├── query.ts                      # ConnectionState ('online'|'offline'), QueryResult
 │   └── events.ts                     # Funnel Event Types & Properties
 ├── data/
+│   ├── travelVibes.ts                # 期待旅遊方案（複選資料、單選資料遷移、畫像建構）
+│   ├── companionQuestions.ts         # 旅伴問答卡片集中註冊（離線可用/需要網路判斷、8 題去重計數）
+│   ├── travelDnaCards.ts             # 3 款 Travel DNA 範例卡資料（首爾/大阪/北海道）
 │   ├── trip.json                     # 首爾五日 Mock 行程（標記 mock: true）
-│   ├── esim_plans.json               # 3 款 eSIM 方案（總量/每日/吃到飽，標記 mock: true）
-│   ├── pack_manifest.json            # 旅程包清單與中繼資料（標記 mock: true）
+│   ├── esim_plans.json               # 3 款 eSIM 方案（標記 mock: true）
+│   ├── pack_manifest.json            # 旅程包清單與中繼資料
 │   └── knowledge_items.json          # 8 類精選本機知識項目（交通/住宿/eSIM排錯/韓文等）
 ├── services/
 │   ├── localPackStore.ts             # 旅程包下載、本機持久化儲存與讀取
-│   ├── localRetrieval.ts             # 本機檢索演算法（BM25-like scoring、Top-3 提取）
+│   ├── localRetrieval.ts             # 本機檢索演算法（BM25-like scoring）
 │   ├── queryClassifier.ts            # 查詢意圖與時效性分類器
-│   ├── queryRouter.ts                # 離線安全閘道與路由調度器
+│   ├── queryRouter.ts                # 離線安全閘道與路由調度器（離線不聯網）
 │   ├── onlineAdapter.ts              # 模擬線上最新資訊（標記 mock: true）
+│   ├── imageGenerationAdapter.ts     # Travel DNA 圖片生成服務 Adapter（本地預置資產/漸層備援）
+│   ├── offlineAssetCache.ts          # CacheStorage 與 Service Worker 離線快取服務
+│   ├── travelCardCanvas.ts           # 1080 × 1920 PNG Canvas 渲染與下載器
 │   └── analytics.ts                  # 事件追蹤與 Funnel 指標計算
 ├── pages/                            # 8 大成長漏斗全流程頁面
 └── tests/
-    ├── localRetrieval.test.ts        # 離線查詢測試案例（8 題精確命中、1 題誠實 Fallback）
-    ├── queryClassifier.test.ts       # 時效性分類測試（即時關鍵詞攔截）
-    └── queryRouter.test.ts           # 離線不聯網閘道與佇列重新執行測試
+    ├── localRetrieval.test.ts        # 離線查詢測試案例
+    ├── queryClassifier.test.ts       # 時效性分類測試
+    ├── queryRouter.test.ts           # 離線不聯網閘道與佇列重新執行測試
+    ├── travelVibesMigration.test.ts  # 複選資料遷移與畫像生成測試
+    └── companionQuestions.test.ts    # 內建問題去重與連線需求標籤測試
 ```
 
 ---

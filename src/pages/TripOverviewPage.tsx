@@ -61,7 +61,7 @@ export const TripOverviewPage: React.FC = () => {
           </div>
           <p className="text-[#171B28] leading-relaxed font-medium">
             分析 Anna 的首爾行程發現：
-            <strong className="text-[#D97706]"> 抵達仁川機場第一時間尚未連上網路</strong>，需查詢前往弘大住宿的 AREX 月台與飯店門牌地址；此外聖水洞快閃店人潮眾多、首爾地鐵地下站常有弱網延遲。
+            <strong className="text-[#D97706]"> 抵達仁川機場第一時間尚未連上網路</strong>，需查詢前往弘大住宿的 AREX 月台與飯店門牌地址；此外聖水洞快閃店人潮眾多、首爾地鐵地下站常有訊號不穩或離線斷網情境。
           </p>
         </div>
 
@@ -71,8 +71,12 @@ export const TripOverviewPage: React.FC = () => {
             <h3 className="text-xs font-black text-[#171B28] tracking-tight">
               首爾 5 日亮點與守護包收錄焦點
             </h3>
-            <span className="text-[11px] font-bold text-[#00AEEF]">
-              已收錄至本機包
+            <span
+              className="text-[11px] font-bold text-[#00AEEF] bg-[#E0F4FC] px-2.5 py-0.5 rounded-full border border-[#00AEEF]/20"
+              aria-label="已儲存行程"
+              title="已儲存行程至手機本機"
+            >
+              已儲存行程
             </span>
           </div>
 
@@ -111,7 +115,7 @@ export const TripOverviewPage: React.FC = () => {
             variant="blue"
           />
           <p className="text-[11px] text-[#64748B] text-center mt-2 font-medium">
-            90 秒展示第 3 站：行程痛點明確化 → 自然帶出 eSIM 流量與離線包價值
+            展示步驟 3：行程痛點明確化 → 自然帶出 eSIM 流量與離線包價值
           </p>
         </div>
       </div>

@@ -2,6 +2,7 @@ export type FunnelEventType =
   | 'trip_viewed'
   | 'travel_profile_generated'
   | 'campaign_cta_clicked'
+  | 'travel_vibe_toggled'
   | 'esim_recommendation_viewed'
   | 'esim_plan_selected'
   | 'pack_build_started'

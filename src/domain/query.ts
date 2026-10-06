@@ -1,4 +1,4 @@
-export type ConnectionState = 'online' | 'poor_connection' | 'offline';
+export type ConnectionState = 'online' | 'offline';
 
 export type QueryCategory = 'personal' | 'stable' | 'real_time' | 'unknown';
 

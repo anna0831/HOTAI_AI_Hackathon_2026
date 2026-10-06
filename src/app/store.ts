@@ -3,6 +3,10 @@ import type { ConnectionState, PendingQuery } from '../domain/query';
 import type { PackDownloadState } from '../domain/pack';
 import { localPackStore } from '../services/localPackStore';
 import { analytics } from '../services/analytics';
+import {
+  migrateSelectedVibes,
+  buildProfileFromVibes,
+} from '../data/travelVibes';
 
 export interface TravelProfile {
   type: string;
@@ -13,8 +17,49 @@ export interface TravelProfile {
   recommended_plan_id: string;
 }
 
+const STORAGE_KEY_CONNECTION = 'chic_connection_state';
+const STORAGE_KEY_SELECTED_VIBES = 'chic_selected_vibes';
+
+function getInitialConnectionState(): ConnectionState {
+  if (typeof window === 'undefined') return 'online';
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY_CONNECTION);
+    if (saved === 'offline') return 'offline';
+    if (saved === 'online') return 'online';
+    if (saved === 'poor_connection') {
+      // 弱網遷移原則：若持久化資料保存了弱網狀態，遷移為依目前實際連線狀態判斷
+      const migrated = window.navigator?.onLine ? 'online' : 'offline';
+      localStorage.setItem(STORAGE_KEY_CONNECTION, migrated);
+      return migrated;
+    }
+  } catch (e) {
+    console.warn('Failed to read connection state from localStorage', e);
+  }
+  return 'online';
+}
+
+function getInitialSelectedVibes(): string[] {
+  if (typeof window === 'undefined') return ['cafe_culture'];
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY_SELECTED_VIBES);
+    if (raw) {
+      try {
+        const parsed = JSON.parse(raw);
+        const migrated = migrateSelectedVibes(parsed);
+        if (migrated.length > 0) return migrated;
+      } catch {
+        const migrated = migrateSelectedVibes(raw);
+        if (migrated.length > 0) return migrated;
+      }
+    }
+  } catch (e) {
+    console.warn('Failed to read selected vibes from localStorage', e);
+  }
+  return ['cafe_culture'];
+}
+
 interface AppState {
-  // Connection state simulator
+  // Connection state simulator (online or offline)
   connectionState: ConnectionState;
   setConnectionState: (state: ConnectionState) => void;
 
@@ -33,32 +78,35 @@ interface AppState {
   removePendingQuery: (queryId: string) => void;
   clearPendingQueries: () => void;
 
+  // Selected Travel Vibes (期待旅遊方案 - 複選陣列)
+  selectedVibes: string[];
+  setSelectedVibes: (vibes: string[] | string) => void;
+  toggleVibe: (vibeId: string) => void;
+
   // Travel DNA Profile
   travelProfile: TravelProfile;
   setTravelProfile: (profile: TravelProfile) => void;
 
-  // Demo step controller
+  // Step controller
   demoStep: number;
   setDemoStep: (step: number) => void;
   nextDemoStep: () => void;
   prevDemoStep: () => void;
 }
 
-export const defaultProfile: TravelProfile = {
-  type: '城市探險型旅人 (Urban Explorer)',
-  badge: '熱愛街拍・深度咖啡・無懼漫步',
-  tagline: '穿梭弘大與聖水洞的感性探索者，用影像與腳步寫下首爾記憶',
-  description: '重視巷弄人文氛圍、當紅快閃店與韓屋設計美感，行程緊湊且極度依賴地圖定位與即時拍照打卡分享。',
-  matched_tags: ['重度地圖導航', '高畫質社群分享', '首爾地鐵穿梭', '弘大聖水選物'],
-  recommended_plan_id: 'kr-5d-daily2gb',
-};
+const initialVibes = getInitialSelectedVibes();
+export const defaultProfile: TravelProfile = buildProfileFromVibes(initialVibes);
 
 export const useAppStore = create<AppState>((set, get) => ({
-  // Default to online initially, demo script switches to offline
-  connectionState: 'online',
+  connectionState: getInitialConnectionState(),
   setConnectionState: (state) => {
     const prev = get().connectionState;
     set({ connectionState: state });
+    try {
+      localStorage.setItem(STORAGE_KEY_CONNECTION, state);
+    } catch {
+      // Ignore localStorage write error
+    }
     analytics.track('connection_changed', { from: prev, to: state });
   },
 
@@ -109,6 +157,35 @@ export const useAppStore = create<AppState>((set, get) => ({
   },
   clearPendingQueries: () => {
     set({ pendingQueries: [] });
+  },
+
+  selectedVibes: initialVibes,
+  setSelectedVibes: (input) => {
+    const migrated = migrateSelectedVibes(input);
+    const updatedProfile = buildProfileFromVibes(migrated);
+    set({ selectedVibes: migrated, travelProfile: updatedProfile });
+    try {
+      localStorage.setItem(STORAGE_KEY_SELECTED_VIBES, JSON.stringify(migrated));
+    } catch {
+      // Ignore
+    }
+  },
+  toggleVibe: (vibeId) => {
+    const current = get().selectedVibes;
+    let next: string[];
+    if (current.includes(vibeId)) {
+      next = current.filter((id) => id !== vibeId);
+    } else {
+      next = [...current, vibeId];
+    }
+    const updatedProfile = buildProfileFromVibes(next);
+    set({ selectedVibes: next, travelProfile: updatedProfile });
+    try {
+      localStorage.setItem(STORAGE_KEY_SELECTED_VIBES, JSON.stringify(next));
+    } catch {
+      // Ignore
+    }
+    analytics.track('travel_vibe_toggled', { vibe_id: vibeId, total_selected: next.length });
   },
 
   travelProfile: defaultProfile,

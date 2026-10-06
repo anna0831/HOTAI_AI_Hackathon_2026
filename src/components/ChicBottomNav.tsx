@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Play } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useAppStore } from '../app/store';
 import { DEMO_STEPS } from '../constants/demoSteps';
 
@@ -55,7 +55,7 @@ export const ChicBottomNav: React.FC = () => {
         </div>
 
         {/* Stepper pills */}
-        <div className="flex items-center gap-1.5 overflow-x-auto py-1 no-scrollbar">
+        <div className="flex items-center gap-1.5 overflow-x-auto py-1 no-scrollbar flex-1 justify-end sm:justify-start">
           {DEMO_STEPS.map((step, idx) => {
             const isActive = idx === activeStep;
             return (
@@ -70,17 +70,9 @@ export const ChicBottomNav: React.FC = () => {
                 }`}
               >
                 <span>{step.label}</span>
-                <span className={`text-[10px] ${isActive ? 'text-[#FFC400]' : 'text-[#64748B]'}`}>
-                  {step.time}
-                </span>
               </button>
             );
           })}
-        </div>
-
-        <div className="hidden lg:flex items-center gap-1.5 text-[11px] text-[#64748B] shrink-0 font-semibold bg-[#F4F7FB] px-2.5 py-1.5 rounded-xl border border-slate-200">
-          <Play className="w-3 h-3 text-[#00AEEF] fill-[#00AEEF]" />
-          <span>90s Demo Mode</span>
         </div>
       </div>
     </footer>

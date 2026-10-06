@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Play } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useAppStore } from '../app/store';
 import { DEMO_STEPS } from '../constants/demoSteps';
 
@@ -55,7 +55,7 @@ export const DemoStepper: React.FC = () => {
         </div>
 
         {/* Stepper pills scrollable */}
-        <div className="flex items-center gap-1 overflow-x-auto py-0.5 no-scrollbar">
+        <div className="flex items-center gap-1 overflow-x-auto py-0.5 no-scrollbar flex-1 justify-end sm:justify-start">
           {DEMO_STEPS.map((step, idx) => {
             const isActive = idx === activeStep;
             return (
@@ -70,15 +70,9 @@ export const DemoStepper: React.FC = () => {
                 }`}
               >
                 <span>{step.label}</span>
-                <span className="text-[10px] opacity-70">({step.time})</span>
               </button>
             );
           })}
-        </div>
-
-        <div className="hidden md:flex items-center gap-1.5 text-[11px] text-slate-400 shrink-0 font-medium">
-          <Play className="w-3 h-3 text-blue-400" />
-          <span>90s Demo Mode</span>
         </div>
       </div>
     </footer>

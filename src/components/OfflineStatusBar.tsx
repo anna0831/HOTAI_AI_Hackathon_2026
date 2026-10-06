@@ -1,5 +1,5 @@
 import React from 'react';
-import { Wifi, WifiOff, Activity } from 'lucide-react';
+import { Wifi, WifiOff } from 'lucide-react';
 import { useAppStore } from '../app/store';
 import type { ConnectionState } from '../domain/query';
 
@@ -12,12 +12,6 @@ export const OfflineStatusBar: React.FC = () => {
       label: '4G/5G 線上',
       icon: <Wifi className="w-3.5 h-3.5" />,
       activeClass: 'bg-[#E6F9F0] text-[#18B46B] border-[#18B46B]/50 font-bold shadow-xs',
-    },
-    {
-      id: 'poor_connection',
-      label: '弱網 (機場/地下街)',
-      icon: <Activity className="w-3.5 h-3.5" />,
-      activeClass: 'bg-[#FEF3C7] text-[#D97706] border-[#D97706]/50 font-bold shadow-xs',
     },
     {
       id: 'offline',
@@ -61,16 +55,12 @@ export const OfflineStatusBar: React.FC = () => {
             className={`w-2 h-2 rounded-full ${
               connectionState === 'online'
                 ? 'bg-[#18B46B] animate-pulse'
-                : connectionState === 'poor_connection'
-                ? 'bg-[#D97706] animate-ping'
                 : 'bg-[#00AEEF]'
             }`}
           />
           <span className="font-mono text-[10px]">
             {connectionState === 'offline'
               ? '離線保護 (本機運作)'
-              : connectionState === 'poor_connection'
-              ? 'POOR NET (弱網)'
               : 'ONLINE (即時連線)'}
           </span>
         </div>

@@ -110,7 +110,7 @@ export const EvidencePage: React.FC = () => {
               <div className="flex items-center justify-between mb-3">
                 <span className="font-extrabold text-sm text-[#171B28] flex items-center gap-1.5">
                   <TrendingUp className="w-4 h-4 text-[#00AEEF]" />
-                  <span>90 秒成長飛輪轉換數據 (Funnel Simulation)</span>
+                  <span>成長飛輪轉換數據 (Funnel Simulation)</span>
                 </span>
                 <span className="text-[10px] font-mono text-[#00AEEF] font-bold bg-[#E0F4FC] px-2 py-0.5 rounded-full">
                   Live Session Data
@@ -412,10 +412,10 @@ export const EvidencePage: React.FC = () => {
             <div className="rounded-3xl bg-white p-4 border border-slate-200/90 shadow-sm">
               <h4 className="font-extrabold text-sm text-[#171B28] mb-1.5 flex items-center gap-1.5">
                 <span className="text-[#00AEEF]">Q2.</span>
-                <span>Killer Moment 定義為「機場尚未連線」還是「弱網環境」？</span>
+                <span>Killer Moment 定義為「機場尚未連線」還是「離線斷網保護」？</span>
               </h4>
               <p className="text-xs text-[#64748B] leading-relaxed font-medium">
-                <strong>決策建議：</strong>以「抵達仁川機場尚未連線」為 90 秒核心 Demo（評審直覺秒懂），以「地下街弱網」為深化場景。
+                <strong>決策建議：</strong>以「抵達仁川機場尚未連線」為核心展示（評審直覺秒懂），聚焦於「落地完全無網保護」Killer Moment。
               </p>
             </div>
 

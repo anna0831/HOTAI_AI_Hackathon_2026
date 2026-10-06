@@ -1,16 +1,28 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Sparkles, ArrowRight, ShieldCheck, Plane, Coffee, Wifi } from 'lucide-react';
+import {
+  Sparkles,
+  ArrowRight,
+  ShieldCheck,
+  Plane,
+  Coffee,
+  Wifi,
+  CheckSquare,
+  Square,
+  AlertCircle,
+} from 'lucide-react';
 import { ChicHeader } from '../components/ChicHeader';
 import { DestinationCard } from '../components/DestinationCard';
 import { PrimaryCTA } from '../components/PrimaryCTA';
+import { useAppStore } from '../app/store';
+import { TRAVEL_VIBE_OPTIONS } from '../data/travelVibes';
 import { analytics } from '../services/analytics';
 
 export const CampaignLandingPage: React.FC = () => {
   const navigate = useNavigate();
+  const { selectedVibes, toggleVibe } = useAppStore();
 
   const [destination, setDestination] = useState('seoul');
-  const [vibe, setVibe] = useState('cafe_culture');
   const [priority, setPriority] = useState('photo_map');
 
   const destinations = [
@@ -53,10 +65,12 @@ export const CampaignLandingPage: React.FC = () => {
   ];
 
   const handleStartAnalysis = () => {
+    if (selectedVibes.length === 0) return;
+
     analytics.track('trip_viewed', { trip_id: 'seoul-demo-001' });
     analytics.track('travel_profile_generated', {
       profile_type: '城市探險型旅人',
-      input_signals: [destination, vibe, priority],
+      input_signals: [destination, ...selectedVibes, priority],
     });
     analytics.track('campaign_cta_clicked', {
       profile_type: '城市探險型旅人',
@@ -64,6 +78,8 @@ export const CampaignLandingPage: React.FC = () => {
     });
     navigate('/result');
   };
+
+  const isFormValid = selectedVibes.length > 0;
 
   return (
     <div className="flex-1 flex flex-col bg-[#F4F7FB]">
@@ -137,45 +153,64 @@ export const CampaignLandingPage: React.FC = () => {
         {/* Section 2: Style & Preferences Questionnaire */}
         <div className="rounded-3xl bg-white p-4 border border-slate-200/90 shadow-sm space-y-4">
           <div>
-            <label className="block text-xs font-extrabold text-[#171B28] mb-2 flex items-center gap-1.5">
-              <Coffee className="w-3.5 h-3.5 text-[#FF8614]" />
-              <span>您在首爾最期待的旅遊風格？</span>
-            </label>
-            <div className="grid grid-cols-2 gap-2">
-              <button
-                type="button"
-                onClick={() => setVibe('cafe_culture')}
-                className={`p-3 rounded-2xl text-left border transition cursor-pointer ${
-                  vibe === 'cafe_culture'
-                    ? 'bg-[#E0F4FC]/40 border-[#00AEEF] text-[#143D5C] ring-1 ring-[#00AEEF]/20'
-                    : 'bg-[#F4F7FB] border-slate-200 text-[#64748B] hover:border-slate-300'
-                }`}
-              >
-                <div className="font-extrabold text-xs text-[#171B28] mb-0.5">
-                  ☕ 弘大＆聖水洞漫步
-                </div>
-                <div className="text-[11px] text-[#64748B]">
-                  設計選物、潮牌快閃、咖啡街拍
-                </div>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setVibe('history_culture')}
-                className={`p-3 rounded-2xl text-left border transition cursor-pointer ${
-                  vibe === 'history_culture'
-                    ? 'bg-[#E0F4FC]/40 border-[#00AEEF] text-[#143D5C] ring-1 ring-[#00AEEF]/20'
-                    : 'bg-[#F4F7FB] border-slate-200 text-[#64748B] hover:border-slate-300'
-                }`}
-              >
-                <div className="font-extrabold text-xs text-[#171B28] mb-0.5">
-                  🏯 景福宮與韓屋村
-                </div>
-                <div className="text-[11px] text-[#64748B]">
-                  穿韓服拍照、傳統宮闕、古韻
-                </div>
-              </button>
+            <div className="flex items-center justify-between mb-2">
+              <label className="text-xs font-extrabold text-[#171B28] flex items-center gap-1.5">
+                <Coffee className="w-3.5 h-3.5 text-[#FF8614]" />
+                <span>您在首爾最期待的旅遊方案？</span>
+              </label>
+              <span className="text-[11px] font-bold text-[#00AEEF] bg-[#E0F4FC] px-2.5 py-0.5 rounded-full border border-[#00AEEF]/20">
+                可複選
+              </span>
             </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {TRAVEL_VIBE_OPTIONS.map((opt) => {
+                const isSelected = selectedVibes.includes(opt.id);
+                return (
+                  <button
+                    key={opt.id}
+                    type="button"
+                    role="checkbox"
+                    aria-checked={isSelected}
+                    aria-pressed={isSelected}
+                    tabIndex={0}
+                    onClick={() => toggleVibe(opt.id)}
+                    onKeyDown={(e) => {
+                      if (e.key === ' ' || e.key === 'Enter') {
+                        e.preventDefault();
+                        toggleVibe(opt.id);
+                      }
+                    }}
+                    className={`p-3 rounded-2xl text-left border transition-all cursor-pointer relative ${
+                      isSelected
+                        ? 'bg-[#E0F4FC]/50 border-[#00AEEF] text-[#143D5C] ring-2 ring-[#00AEEF]/20 shadow-2xs'
+                        : 'bg-[#F4F7FB] border-slate-200 text-[#64748B] hover:border-slate-300 hover:bg-slate-100/70'
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-1 mb-1">
+                      <div className="font-extrabold text-xs text-[#171B28]">
+                        {opt.emoji} {opt.title}
+                      </div>
+                      {isSelected ? (
+                        <CheckSquare className="w-4 h-4 text-[#00AEEF] shrink-0" />
+                      ) : (
+                        <Square className="w-4 h-4 text-slate-300 shrink-0" />
+                      )}
+                    </div>
+                    <div className="text-[11px] text-[#64748B] leading-relaxed">
+                      {opt.description}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            {!isFormValid && (
+              <div className="flex items-center gap-1.5 text-xs text-[#DC2626] font-bold mt-2 bg-rose-50 border border-rose-200 px-3 py-1.5 rounded-xl">
+                <AlertCircle className="w-4 h-4 shrink-0" />
+                <span>請至少選擇一項期待旅遊方案（可複選）</span>
+              </div>
+            )}
           </div>
 
           <div>
@@ -214,7 +249,7 @@ export const CampaignLandingPage: React.FC = () => {
                   🛡️ 落地安心不迷路
                 </div>
                 <div className="text-[11px] text-[#64748B]">
-                  弱網仍能查住宿交通、緊急電話
+                  離線仍能查住宿交通、緊急電話
                 </div>
               </button>
             </div>
@@ -240,9 +275,10 @@ export const CampaignLandingPage: React.FC = () => {
             label="生成專屬 Travel Profile 與方案推薦"
             onClick={handleStartAnalysis}
             variant="blue"
+            disabled={!isFormValid}
           />
           <p className="text-[11px] text-[#64748B] text-center mt-2 font-medium">
-            90 秒展示第 1 站：首頁意圖互動 → 建立品牌認知與 First-party Data
+            展示步驟 1：首頁意圖互動 → 建立品牌認知與 First-party Data
           </p>
         </div>
       </div>

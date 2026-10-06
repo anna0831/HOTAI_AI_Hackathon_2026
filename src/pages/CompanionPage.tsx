@@ -2,34 +2,26 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Send,
-  Sparkles,
   RefreshCw,
   Clock,
   ArrowRight,
   WifiOff,
-  Wifi
+  Wifi,
+  AlertCircle,
+  HelpCircle,
 } from 'lucide-react';
 import { ChicHeader } from '../components/ChicHeader';
 import { FreshnessBadge } from '../components/FreshnessBadge';
 import { SourceCard } from '../components/SourceCard';
 import { useAppStore } from '../app/store';
 import { queryRouter } from '../services/queryRouter';
+import {
+  COMPANION_QUESTIONS,
+  getQuestionCardState,
+  type CompanionQuestion,
+} from '../data/companionQuestions';
 import type { QueryResult } from '../domain/query';
 import { analytics } from '../services/analytics';
-
-const QUICK_TEST_QUERIES = [
-  { label: '✈️ 機場到弘大交通', q: '我要怎麼從仁川機場到弘大的住宿？', type: 'offline' },
-  { label: '🏨 住宿地址與門牌', q: '我的住宿地址是什麼？', type: 'offline' },
-  { label: '⚠️ AREX 即時延誤？', q: 'AREX 現在有沒有延誤？', type: 'realtime' },
-  { label: '🌤️ 現在首爾幾度？', q: '現在首爾幾度？', type: 'realtime' },
-  { label: '📶 eSIM 沒訊號排錯', q: 'eSIM 沒有連上要先檢查什麼？', type: 'offline' },
-  { label: '🏯 明天 Day2 行程', q: '明天行程有哪些景點？', type: 'offline' },
-  { label: '☕ 聖水洞哪一站下車', q: '去聖水洞要在哪一站下車？', type: 'offline' },
-  { label: '🗣️ 洗手間韓文怎麼說', q: '「請問洗手間在哪裡」韓文怎麼說？', type: 'offline' },
-  { label: '🚨 韓國緊急電話', q: '韓國緊急電話是多少？', type: 'offline' },
-  { label: '🏛️ 景福宮歷史由來', q: '景福宮有什麼歷史？', type: 'offline' },
-  { label: '🎫 幫我買 BTS 門票', q: '幫我買 BTS 演唱會門票', type: 'fallback' },
-];
 
 export const CompanionPage: React.FC = () => {
   const navigate = useNavigate();
@@ -39,10 +31,12 @@ export const CompanionPage: React.FC = () => {
     pendingQueries,
     addPendingQuery,
     removePendingQuery,
+    packState,
   } = useAppStore();
 
   const [inputQuery, setInputQuery] = useState('');
   const [loading, setLoading] = useState(false);
+  const [cardNotice, setCardNotice] = useState<string | null>(null);
   const [messages, setMessages] = useState<QueryResult[]>([
     {
       query_id: 'welcome-001',
@@ -63,6 +57,13 @@ export const CompanionPage: React.FC = () => {
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, loading]);
+
+  useEffect(() => {
+    if (cardNotice) {
+      const timer = setTimeout(() => setCardNotice(null), 3500);
+      return () => clearTimeout(timer);
+    }
+  }, [cardNotice]);
 
   const handleSubmit = async (queryText: string) => {
     if (!queryText.trim() || loading) return;
@@ -95,6 +96,22 @@ export const CompanionPage: React.FC = () => {
       setLoading(false);
       setInputQuery('');
     }
+  };
+
+  const handleQuestionCardClick = (question: CompanionQuestion) => {
+    const cardState = getQuestionCardState(
+      question,
+      connectionState,
+      packState.isDownloaded
+    );
+
+    if (!cardState.canClick) {
+      setCardNotice(cardState.disabledReason || '目前狀態暫無法發送此問題');
+      return;
+    }
+
+    setCardNotice(null);
+    handleSubmit(question.query);
   };
 
   const handleResolvePending = async (pendingQueryId: string, rawQuery: string) => {
@@ -194,6 +211,14 @@ export const CompanionPage: React.FC = () => {
         </div>
       )}
 
+      {/* Card Click Notification Banner */}
+      {cardNotice && (
+        <div className="mx-4 mt-2 p-2.5 rounded-2xl bg-amber-50 border border-amber-300 text-xs text-[#7C2D12] flex items-center gap-2 shrink-0 animate-fade-in shadow-2xs">
+          <AlertCircle className="w-4 h-4 text-[#EA580C] shrink-0" />
+          <span className="font-semibold leading-relaxed">{cardNotice}</span>
+        </div>
+      )}
+
       {/* Messages Stream */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.map((msg, index) => (
@@ -241,34 +266,42 @@ export const CompanionPage: React.FC = () => {
         <div ref={chatEndRef} />
       </div>
 
-      {/* Quick Test Chips */}
+      {/* Quick Question Cards Section */}
       <div className="px-3 py-2 bg-white border-t border-slate-200 shrink-0">
-        <div className="text-[11px] text-[#64748B] font-bold mb-1.5 flex items-center justify-between px-1">
+        <div className="flex items-center justify-between mb-1.5 px-1 text-[11px] text-[#64748B] font-bold">
           <span className="flex items-center gap-1 text-[#143D5C]">
-            <Sparkles className="w-3.5 h-3.5 text-[#00AEEF]" />
-            <span>90 秒黑客松檢測題（點擊即發問）：</span>
+            <HelpCircle className="w-3.5 h-3.5 text-[#00AEEF]" />
+            <span>常見旅程問題（依連線需求區分）：</span>
           </span>
-          <span className="text-[10px] text-[#00AEEF] font-mono font-extrabold">
-            8 離線 + 2 即時
+          <span className="text-[10px] font-mono font-extrabold text-[#00AEEF]">
+            {connectionState === 'offline' ? '離線保護模式中' : '線上即時連線中'}
           </span>
         </div>
-        <div className="flex gap-1.5 overflow-x-auto pb-1 no-scrollbar">
-          {QUICK_TEST_QUERIES.map((item, idx) => (
-            <button
-              key={idx}
-              type="button"
-              onClick={() => handleSubmit(item.q)}
-              className={`px-3 py-1.5 rounded-full text-xs whitespace-nowrap border transition font-bold cursor-pointer ${
-                item.type === 'realtime'
-                  ? 'bg-amber-50 text-amber-700 border-amber-300 hover:bg-amber-100'
-                  : item.type === 'fallback'
-                  ? 'bg-rose-50 text-rose-700 border-rose-300 hover:bg-rose-100'
-                  : 'bg-[#F4F7FB] text-[#143D5C] border-slate-200 hover:bg-slate-200'
-              }`}
-            >
-              {item.label}
-            </button>
-          ))}
+
+        <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
+          {COMPANION_QUESTIONS.map((item) => {
+            const cardState = getQuestionCardState(
+              item,
+              connectionState,
+              packState.isDownloaded
+            );
+            return (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => handleQuestionCardClick(item)}
+                aria-disabled={!cardState.canClick}
+                className={`px-3 py-2 rounded-2xl text-xs whitespace-nowrap border transition-all flex items-center gap-2 shrink-0 ${cardState.cardStyle}`}
+              >
+                <span className="font-bold">{item.label}</span>
+                <span
+                  className={`text-[10px] px-1.5 py-0.5 rounded-full ${cardState.badgeStyle}`}
+                >
+                  {cardState.badgeLabel}
+                </span>
+              </button>
+            );
+          })}
         </div>
       </div>
 

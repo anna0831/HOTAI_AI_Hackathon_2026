@@ -6,6 +6,8 @@ import { PrimaryCTA } from '../components/PrimaryCTA';
 import { SectionHeading } from '../components/SectionHeading';
 import { useAppStore } from '../app/store';
 import packManifest from '../data/pack_manifest.json';
+import { getPackBuiltinQuestionsCount } from '../data/companionQuestions';
+import { cacheTravelDnaAssets } from '../services/offlineAssetCache';
 
 export const PackBuilderPage: React.FC = () => {
   const navigate = useNavigate();
@@ -13,6 +15,7 @@ export const PackBuilderPage: React.FC = () => {
 
   const handleDownload = async () => {
     await downloadPack();
+    await cacheTravelDnaAssets();
   };
 
   const handleEnterCompanion = () => {
@@ -59,10 +62,10 @@ export const PackBuilderPage: React.FC = () => {
             <div className="p-3 rounded-2xl bg-[#F4F7FB] border border-slate-200/80">
               <div className="text-[10px] text-[#64748B] font-bold mb-0.5 flex items-center justify-center gap-1">
                 <Database className="w-3 h-3 text-[#FF8614]" />
-                <span>知識段落</span>
+                <span>內建問題</span>
               </div>
               <div className="font-black text-[#171B28] font-mono text-sm">
-                {packManifest.total_passages} 筆
+                {getPackBuiltinQuestionsCount(packManifest.pack_id)} 題
               </div>
             </div>
 
@@ -181,7 +184,7 @@ export const PackBuilderPage: React.FC = () => {
             variant="orange"
           />
           <p className="text-[11px] text-[#64748B] text-center mt-2 font-medium">
-            90 秒展示第 5 站：點擊後自動切換至「離線保護模式」驗證 Killer Moment
+            展示步驟 5：點擊後自動切換至「離線保護模式」驗證 Killer Moment
           </p>
         </div>
       </div>

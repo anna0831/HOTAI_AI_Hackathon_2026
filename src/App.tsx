@@ -5,11 +5,15 @@ import { ChicBottomNav } from './components/ChicBottomNav';
 import { MobileFrame } from './components/MobileFrame';
 import { AppRouter } from './app/router';
 import { localPackStore } from './services/localPackStore';
+import { registerServiceWorker, cacheTravelDnaAssets } from './services/offlineAssetCache';
 
 export const App: React.FC = () => {
   useEffect(() => {
     // Ensure default offline pack is seeded for seamless demo
     localPackStore.ensureDefaultPack();
+    // Register Service Worker and cache Travel DNA assets for offline support
+    registerServiceWorker();
+    cacheTravelDnaAssets();
   }, []);
 
   return (

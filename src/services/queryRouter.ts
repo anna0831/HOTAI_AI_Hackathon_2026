@@ -52,7 +52,7 @@ export class QueryRouter implements IQueryRouter {
           queued: true,
         };
       } else {
-        // Online or poor connection: fetch from online adapter
+        // Online: fetch from online adapter
         const liveData = await onlineAdapter.fetchLiveInfo(query);
         const latency = Math.round(performance.now() - startTime);
 

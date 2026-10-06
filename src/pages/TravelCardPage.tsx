@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Download, Copy, Check, Sparkles, ShieldCheck, MapPin } from 'lucide-react';
+import { Copy, Check, Sparkles, ShieldCheck, MapPin, Share2 } from 'lucide-react';
 import { ChicHeader } from '../components/ChicHeader';
 import { PrimaryCTA } from '../components/PrimaryCTA';
 import { SectionHeading } from '../components/SectionHeading';
+import { TravelDnaStoryCards } from '../components/TravelDnaStoryCards';
 import { useAppStore } from '../app/store';
 import { analytics } from '../services/analytics';
 
@@ -11,46 +12,81 @@ export const TravelCardPage: React.FC = () => {
   const navigate = useNavigate();
   const { travelProfile } = useAppStore();
   const [copied, setCopied] = useState(false);
-  const [downloaded, setDownloaded] = useState(false);
+  const [shareNotice, setShareNotice] = useState<{ text: string; isSuccess: boolean } | null>(null);
 
   const referralCode = 'CHIC-ANNA-KR';
 
-  const handleCopyLink = () => {
+  const showShareNotice = (msg: string, isSuccess = true) => {
+    setShareNotice({ text: msg, isSuccess });
+    setTimeout(() => setShareNotice(null), 3500);
+  };
+
+  const handleCopyLink = async () => {
     setCopied(true);
     analytics.track('share_intent_clicked', {
       channel: 'copy_link',
       referral_id: referralCode,
     });
+
+    const shareContent = `【去趣 chicTrip・首爾旅程回憶】\nAnna 的首爾 5 日旅行回憶卡・${travelProfile.type}\n「在仁川機場離線時有去趣守護包指引 AREX，在聖水洞快閃店有穩定的 2GB 串流分享！」\n\n示範推薦碼【${referralCode}】（示範推薦碼，無實際優惠）`;
+
+    try {
+      await navigator.clipboard.writeText(shareContent);
+      showShareNotice('已複製推薦文案，可至 Threads 或社群貼上分享！', true);
+    } catch {
+      showShareNotice('已複製推薦碼：' + referralCode, true);
+    }
+
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleSimulateDownload = () => {
-    setDownloaded(true);
-    analytics.track('travel_card_created', {
-      trip_id: 'seoul-demo-001',
-      profile_type: travelProfile.type,
-      action: 'image_download_mock',
+  const handleSystemShare = async () => {
+    analytics.track('share_intent_clicked', {
+      channel: 'threads_share',
+      referral_id: referralCode,
     });
-    setTimeout(() => setDownloaded(false), 2000);
+
+    const shareContent = `【去趣 chicTrip・首爾旅程回憶】\nAnna 的首爾 5 日旅行回憶卡・${travelProfile.type}\n「在仁川機場離線時有去趣守護包指引 AREX，在聖水洞快閃店有穩定的 2GB 串流分享！」\n示範推薦碼【${referralCode}】（示範推薦碼，無實際優惠）`;
+
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Anna 的首爾 5 日旅行回憶卡',
+          text: shareContent,
+        });
+        showShareNotice('系統分享完成', true);
+        return;
+      } catch (err: unknown) {
+        if ((err as Error)?.name === 'AbortError') {
+          // 使用者取消分享時，不自動複製內容，也不顯示分享成功
+          showShareNotice('已取消分享', false);
+          return;
+        }
+        showShareNotice('無法開啟系統分享，請使用「複製專屬推薦文案」', false);
+        return;
+      }
+    } else {
+      showShareNotice('目前環境未支援系統分享，請點擊「複製專屬推薦文案」', false);
+    }
   };
 
   return (
     <div className="flex-1 flex flex-col bg-[#F4F7FB]">
       <ChicHeader subtitle="旅後口碑與好友推薦循環 (UGC Loop)" />
 
-      <div className="p-4 space-y-4">
+      <div className="p-4 space-y-5">
         {/* Intro */}
         <div className="rounded-3xl bg-white p-5 border border-slate-200/90 shadow-sm">
           <SectionHeading
             badge="去趣口碑回流機制 (Referral Loop)"
             badgeColor="orange"
             title="Anna 的首爾 5 日旅行回憶卡"
-            subtitle="由 AI 旅伴問答與每日行程自動生成・適合截圖與分享至 Instagram Stories 或 LINE"
+            subtitle="由 AI 旅伴問答與每日行程自動生成・適合截圖與分享至 Instagram Stories 或 Threads"
           />
         </div>
 
-        {/* The Shareable Travel Card (Instagram Story / Post Card aesthetic) */}
-        <div className="rounded-3xl bg-white p-6 border-2 border-[#00AEEF]/40 shadow-lg shadow-slate-200/70 relative overflow-hidden text-[#171B28]">
+        {/* The Shareable Travel Card (Formal Trip Card) */}
+        <div className="rounded-3xl bg-white p-5 sm:p-6 border-2 border-[#00AEEF]/40 shadow-lg shadow-slate-200/70 relative overflow-hidden text-[#171B28]">
           {/* Top brand header bar */}
           <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
             <div className="flex items-center gap-2">
@@ -114,7 +150,7 @@ export const TravelCardPage: React.FC = () => {
                 好友推薦碼：<span className="text-[#FF8614]">{referralCode}</span>
               </div>
               <div className="text-[10px] text-[#64748B] mt-0.5">
-                好友測驗折 15% ＋ 送離線守護包（Prototype 示範優惠）
+                示範推薦碼，無實際優惠（Prototype 示範）
               </div>
             </div>
             <div className="w-10 h-10 rounded-2xl bg-[#FFC400]/20 text-[#FF8614] flex items-center justify-center shrink-0">
@@ -123,7 +159,7 @@ export const TravelCardPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Action Buttons */}
+        {/* Action Buttons for Formal Trip */}
         <div className="grid grid-cols-2 gap-2.5">
           <button
             type="button"
@@ -135,27 +171,43 @@ export const TravelCardPage: React.FC = () => {
             ) : (
               <Copy className="w-4 h-4 text-[#00AEEF]" />
             )}
-            <span>{copied ? '已複製推薦連結' : '複製專屬推薦連結'}</span>
+            <span>{copied ? '已複製推薦文案' : '複製專屬推薦文案'}</span>
           </button>
 
           <button
             type="button"
-            onClick={handleSimulateDownload}
+            onClick={handleSystemShare}
             className="h-12 rounded-2xl bg-[#00AEEF]/10 hover:bg-[#00AEEF]/20 text-[#00AEEF] font-bold text-xs border border-[#00AEEF]/30 shadow-2xs flex items-center justify-center gap-2 transition cursor-pointer"
           >
-            {downloaded ? (
-              <Check className="w-4 h-4 text-[#18B46B]" />
-            ) : (
-              <Download className="w-4 h-4" />
-            )}
-            <span>{downloaded ? '已模擬儲存卡片' : '下載限動分享卡'}</span>
+            <Share2 className="w-4 h-4" />
+            <span>系統分享</span>
           </button>
         </div>
+
+        {shareNotice && (
+          <div
+            className={`p-2.5 rounded-2xl text-xs font-semibold flex items-center gap-2 ${
+              shareNotice.isSuccess
+                ? 'bg-[#E6F9F0] border border-[#A7F3D0] text-[#065F46]'
+                : 'bg-slate-100 border border-slate-200 text-[#171B28]'
+            }`}
+          >
+            {shareNotice.isSuccess ? (
+              <Check className="w-4 h-4 text-[#18B46B] shrink-0" />
+            ) : (
+              <Sparkles className="w-4 h-4 text-[#00AEEF] shrink-0" />
+            )}
+            <span>{shareNotice.text}</span>
+          </div>
+        )}
+
+        {/* Requirement 9: Dedicated Travel DNA Story Cards Section (3 switchable samples) */}
+        <TravelDnaStoryCards />
 
         {/* Growth Loop Explanation */}
         <div className="p-3.5 rounded-2xl bg-white border border-slate-200 text-xs text-[#64748B] leading-relaxed">
           <span className="font-extrabold text-[#171B28] mr-1">循環機制說明：</span>
-          好友點擊此卡片後，將直接返回「去趣旅行型態測驗」入口，形成「曝光 → 轉換 → 服務 → 口碑」的自驅飛輪。
+          好友點擊此卡片或在 Threads 看見推薦碼後，將直接返回「去趣旅行型態測驗」入口，形成「曝光 → 轉換 → 服務 → 口碑」的自驅飛輪。
         </div>
 
         {/* Primary CTA to Evidence Dashboard */}
@@ -166,7 +218,7 @@ export const TravelCardPage: React.FC = () => {
             variant="ink"
           />
           <p className="text-[11px] text-[#64748B] text-center mt-2 font-medium">
-            90 秒展示第 8 站：完整呈現事件漏斗、Klook 差異化分析與決策數據
+            展示步驟 8：完整呈現事件漏斗、Klook 差異化分析與決策數據
           </p>
         </div>
       </div>

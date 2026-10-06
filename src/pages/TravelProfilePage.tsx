@@ -81,7 +81,7 @@ export const TravelProfilePage: React.FC = () => {
             variant="blue"
           />
           <p className="text-[11px] text-[#64748B] text-center mt-2 font-medium">
-            90 秒展示第 2 站：旅人認同感建立 → 自然導流至商品頁與行程分析
+            展示步驟 2：旅人認同感建立 → 自然導流至商品頁與行程分析
           </p>
         </div>
       </div>
