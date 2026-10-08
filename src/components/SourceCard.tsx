@@ -20,7 +20,7 @@ export const SourceCard: React.FC<SourceCardProps> = ({ sources }) => {
         {sources.map((src, idx) => (
           <div
             key={src.id || idx}
-            className="p-3 rounded-2xl bg-white border border-slate-200 shadow-2xs text-[#171B28]"
+            className="p-3 rounded-none bg-white border border-slate-200 shadow-2xs text-[#171B28]"
           >
             <div className="flex items-center justify-between gap-2 mb-1">
               <span className="font-bold text-[#143D5C] text-xs truncate">

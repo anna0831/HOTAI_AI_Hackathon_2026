@@ -40,4 +40,6 @@ export interface PackDownloadState {
   packId?: string;
   version?: string;
   sizeKb?: number;
+  /** Experience Twin 備案最後生成時間（ISO 8601），選填；舊版 localStorage 無此欄位時為 undefined */
+  twinsGeneratedAt?: string;
 }

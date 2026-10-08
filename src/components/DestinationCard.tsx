@@ -28,7 +28,7 @@ export const DestinationCard: React.FC<DestinationCardProps> = ({
       type="button"
       disabled={disabled}
       onClick={onClick}
-      className={`p-3.5 rounded-2xl text-left border transition-all relative flex flex-col justify-between cursor-pointer ${
+      className={`p-3.5 rounded-none text-left border transition-all relative flex flex-col justify-between cursor-pointer ${
         active
           ? 'bg-white border-[#00AEEF] ring-2 ring-[#00AEEF]/20 shadow-md'
           : disabled
@@ -40,7 +40,7 @@ export const DestinationCard: React.FC<DestinationCardProps> = ({
         <div className="text-2xl">{flag}</div>
         {badge && (
           <span
-            className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+            className={`text-[10px] font-bold px-2 py-0.5 rounded-none ${
               active
                 ? 'bg-[#00AEEF]/10 text-[#00AEEF] border border-[#00AEEF]/20'
                 : 'bg-amber-50 text-amber-600 border border-amber-200'

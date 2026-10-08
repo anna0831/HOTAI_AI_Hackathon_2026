@@ -25,11 +25,11 @@ export const EsimRecommendationPage: React.FC = () => {
 
   return (
     <div className="flex-1 flex flex-col bg-[#F4F7FB]">
-      <ChicHeader subtitle="Smart eSIM 方案精選與決策解釋" />
+      <ChicHeader subtitle="Smart eSIM 方案精選和決策解釋" />
 
       <div className="p-4 space-y-4">
         {/* Page Heading */}
-        <div className="rounded-3xl bg-white p-5 border border-slate-200/90 shadow-sm">
+        <div className="rounded-none bg-white p-5 border border-slate-200/90 shadow-sm">
           <SectionHeading
             badge="去趣 Smart eSIM 導購"
             badgeColor="blue"
@@ -37,7 +37,7 @@ export const EsimRecommendationPage: React.FC = () => {
             subtitle="打破傳統只看 GB 數的迷思・以旅行情境解釋為什麼適合"
           />
 
-          <div className="p-3 rounded-2xl bg-[#E0F4FC]/50 border border-[#00AEEF]/30 flex items-center gap-2.5 text-xs text-[#143D5C]">
+          <div className="p-3 rounded-none bg-[#E0F4FC]/50 border border-[#00AEEF]/30 flex items-center gap-2.5 text-xs text-[#143D5C]">
             <ShieldCheck className="w-5 h-5 text-[#00AEEF] shrink-0 stroke-[2.5]" />
             <p className="font-medium leading-relaxed">
               <strong className="text-[#171B28]">去趣獨家權益：</strong>
@@ -59,13 +59,13 @@ export const EsimRecommendationPage: React.FC = () => {
         </div>
 
         {/* Prototype Mock Notice */}
-        <div className="p-3 rounded-2xl bg-white border border-slate-200 text-center text-xs text-[#64748B]">
+        <div className="p-3 rounded-none bg-white border border-slate-200 text-center text-xs text-[#64748B]">
           <div className="flex items-center justify-center gap-1.5 font-bold text-[#143D5C] mb-0.5">
             <Info className="w-3.5 h-3.5 text-[#00AEEF]" />
             <span>競賽 Prototype 示範資料聲明</span>
           </div>
           <p className="text-[11px] leading-relaxed">
-            本展示之方案規格與推薦理由皆為模擬情境（Mock Data），用以驗證個人化導購轉換成效。
+            本展示方案規格和推薦理由皆為模擬情境（Mock Data），用以驗證個人化導購轉換成效。
           </p>
         </div>
       </div>

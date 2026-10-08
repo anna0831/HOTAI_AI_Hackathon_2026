@@ -25,7 +25,7 @@ export const ConnectionStatus: React.FC = () => {
     <div className="flex items-center justify-between px-3 py-2 bg-slate-900/90 border-b border-slate-800 text-xs backdrop-blur-md">
       <div className="flex items-center gap-2">
         <span className="text-slate-400 font-medium hidden sm:inline">網路環境模擬：</span>
-        <div className="inline-flex rounded-lg p-0.5 bg-slate-950 border border-slate-800">
+        <div className="inline-flex rounded-none p-0.5 bg-slate-950 border border-slate-800">
           {states.map((s) => {
             const active = connectionState === s.id;
             return (
@@ -33,7 +33,7 @@ export const ConnectionStatus: React.FC = () => {
                 key={s.id}
                 type="button"
                 onClick={() => setConnectionState(s.id)}
-                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md transition-all font-medium text-xs ${
+                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-none transition-all font-medium text-xs ${
                   active
                     ? `${s.color} border shadow-sm font-semibold`
                     : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 border border-transparent'

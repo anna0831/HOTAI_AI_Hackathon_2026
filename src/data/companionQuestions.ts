@@ -88,7 +88,7 @@ export const COMPANION_QUESTIONS: CompanionQuestion[] = [
   // Network required questions (Real-time dynamic info)
   {
     id: 'q-arex-realtime-delay',
-    label: '⚠️ AREX 即時延誤？',
+    label: '🔸 AREX 即時延誤？',
     query: 'AREX 現在有沒有延誤？',
     requirement: 'network_required',
     description: '即時列車運行狀態與事故通報',

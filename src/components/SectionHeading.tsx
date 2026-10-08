@@ -26,7 +26,7 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
     <div className={`mb-3.5 ${className}`}>
       {badge && (
         <span
-          className={`inline-block text-[11px] font-extrabold px-2.5 py-0.5 rounded-full border mb-1.5 ${badgeStyles[badgeColor]}`}
+          className={`inline-block text-[11px] font-extrabold px-2.5 py-0.5 rounded-none border mb-1.5 ${badgeStyles[badgeColor]}`}
         >
           {badge}
         </span>

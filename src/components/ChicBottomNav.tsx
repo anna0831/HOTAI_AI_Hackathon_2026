@@ -37,7 +37,7 @@ export const ChicBottomNav: React.FC = () => {
             type="button"
             onClick={handlePrev}
             disabled={activeStep === 0}
-            className="p-2 rounded-xl bg-[#F4F7FB] text-[#143D5C] hover:bg-slate-200 disabled:opacity-30 disabled:pointer-events-none transition cursor-pointer border border-slate-200"
+            className="p-2 rounded-none bg-[#F4F7FB] text-[#143D5C] hover:bg-slate-200 disabled:opacity-30 disabled:pointer-events-none transition cursor-pointer border border-slate-200"
             title="上一步"
           >
             <ChevronLeft className="w-4 h-4" />
@@ -46,7 +46,7 @@ export const ChicBottomNav: React.FC = () => {
             type="button"
             onClick={handleNext}
             disabled={activeStep === DEMO_STEPS.length - 1}
-            className="px-3 py-2 rounded-xl bg-[#00AEEF] hover:bg-[#009bd6] text-white font-bold transition flex items-center gap-1 cursor-pointer shadow-xs disabled:opacity-30 disabled:pointer-events-none"
+            className="px-3 py-2 rounded-none bg-[#00AEEF] hover:bg-[#009bd6] text-white font-bold transition flex items-center gap-1 cursor-pointer shadow-xs disabled:opacity-30 disabled:pointer-events-none"
             title="下一步"
           >
             <span>下一步</span>
@@ -63,7 +63,7 @@ export const ChicBottomNav: React.FC = () => {
                 key={step.path}
                 type="button"
                 onClick={() => handleStepClick(idx)}
-                className={`px-3 py-1.5 rounded-xl whitespace-nowrap text-xs transition-all flex items-center gap-1.5 cursor-pointer ${
+                className={`px-3 py-1.5 rounded-none whitespace-nowrap text-xs transition-all flex items-center gap-1.5 cursor-pointer ${
                   isActive
                     ? 'bg-[#171B28] text-white font-bold shadow-sm'
                     : 'bg-[#F4F7FB] text-[#64748B] hover:text-[#171B28] hover:bg-slate-200/80 border border-slate-200/60 font-medium'

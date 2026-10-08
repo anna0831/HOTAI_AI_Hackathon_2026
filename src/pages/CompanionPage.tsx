@@ -44,7 +44,7 @@ export const CompanionPage: React.FC = () => {
       category: 'personal',
       mode: 'offline_local',
       answer:
-        '您好 Anna！歡迎抵達首爾仁川國際機場 🇰🇷\n目前偵測您處於【離線保護模式】。您下載的首爾 5 日守護包已全數就緒，隨時為您解答 AREX 機場快線、弘大住宿門牌、行程路線與 eSIM 啟用排錯！',
+        '您好 Anna！歡迎抵達首爾仁川國際機場 🇰🇷\n目前偵測您處於【離線保護模式】。您下載的首爾 5 日守護包已全數就緒，隨時為您解答 AREX 機場快線、弘大住宿門牌、行程路線和 eSIM 啟用排錯！',
       sources: [],
       timestamp: new Date().toISOString(),
       latency_ms: 1,
@@ -125,10 +125,10 @@ export const CompanionPage: React.FC = () => {
       <ChicHeader subtitle="Offline AI Travel Companion・首爾守護中" />
 
       {/* Network & Scenario Control Bar */}
-      <div className="px-4 py-2 bg-white border-b border-slate-200/90 flex items-center justify-between shrink-0 shadow-2xs">
-        <div className="flex items-center gap-2">
+      <div className="px-4 py-2 bg-white border-b border-slate-200/90 flex items-center justify-between gap-2 shrink-0 shadow-2xs">
+        <div className="flex items-center gap-2 min-w-0 flex-1">
           <div
-            className={`w-8 h-8 rounded-xl flex items-center justify-center ${
+            className={`w-8 h-8 rounded-none flex items-center justify-center shrink-0 ${
               connectionState === 'offline'
                 ? 'bg-[#E0F4FC] text-[#00AEEF]'
                 : 'bg-[#E6F9F0] text-[#18B46B]'
@@ -140,17 +140,17 @@ export const CompanionPage: React.FC = () => {
               <Wifi className="w-4 h-4 stroke-[2.5]" />
             )}
           </div>
-          <div>
-            <div className="font-extrabold text-xs text-[#171B28] flex items-center gap-1.5">
+          <div className="min-w-0 flex-1">
+            <div className="font-extrabold text-xs text-[#171B28] flex items-center gap-1.5 flex-wrap">
               <span>{connectionState === 'offline' ? '離線保護模式' : '線上即時模式'}</span>
-              <span className="text-[10px] font-mono px-1.5 py-0.2 rounded-full bg-[#F4F7FB] text-[#143D5C] border border-slate-200">
+              <span className="text-[10px] font-mono px-1.5 py-0.2 rounded-none bg-[#F4F7FB] text-[#143D5C] border border-slate-200 shrink-0">
                 Seoul Pack v1.0
               </span>
             </div>
-            <div className="text-[11px] text-[#64748B] font-medium">
+            <div className="text-[11px] text-[#64748B] font-medium truncate">
               {connectionState === 'offline'
                 ? '仁川機場落地未連網・完全使用本機守護包'
-                : '已連上網路・支援最新天氣與列車延誤'}
+                : '已連上網路・支援最新天氣和列車延誤'}
             </div>
           </div>
         </div>
@@ -161,7 +161,7 @@ export const CompanionPage: React.FC = () => {
           onClick={() =>
             setConnectionState(connectionState === 'offline' ? 'online' : 'offline')
           }
-          className="text-xs px-3 py-1.5 rounded-xl border font-bold transition cursor-pointer flex items-center gap-1.5 bg-[#F4F7FB] hover:bg-slate-200 border-slate-200 text-[#143D5C]"
+          className="text-xs px-3 py-1.5 rounded-none border font-bold transition cursor-pointer flex items-center justify-center gap-1.5 bg-[#F4F7FB] hover:bg-slate-200 border-slate-200 text-[#143D5C] shrink-0 whitespace-nowrap"
         >
           <RefreshCw className="w-3.5 h-3.5 text-[#00AEEF]" />
           <span>切換為 {connectionState === 'offline' ? 'Online' : 'Offline'}</span>
@@ -177,8 +177,8 @@ export const CompanionPage: React.FC = () => {
               <span>待連線即時問題清單 ({pendingQueries.length} 題佇列中)</span>
             </span>
             {connectionState === 'online' && (
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#18B46B] text-white">
-                網路已恢復・可一鍵更新
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-none bg-[#18B46B] text-white">
+                網路已恢復・可以一鍵更新
               </span>
             )}
           </div>
@@ -186,7 +186,7 @@ export const CompanionPage: React.FC = () => {
             {pendingQueries.map((pq) => (
               <div
                 key={pq.query_id}
-                className="flex items-center justify-between gap-2 p-2.5 rounded-2xl bg-white border border-[#F59E0B]/30 text-xs shadow-2xs"
+                className="flex items-center justify-between gap-2 p-2.5 rounded-none bg-white border border-[#F59E0B]/30 text-xs shadow-2xs"
               >
                 <span className="text-[#171B28] font-medium truncate">
                   「{pq.raw_query}」
@@ -195,7 +195,7 @@ export const CompanionPage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => handleResolvePending(pq.query_id, pq.raw_query)}
-                    className="px-2.5 py-1 rounded-xl bg-[#00AEEF] hover:bg-[#009bd6] text-white font-bold text-xs shrink-0 flex items-center gap-1 cursor-pointer"
+                    className="px-2.5 py-1 rounded-none bg-[#00AEEF] hover:bg-[#009bd6] text-white font-bold text-xs shrink-0 flex items-center gap-1 cursor-pointer"
                   >
                     <RefreshCw className="w-3 h-3" />
                     <span>取得最新即時資訊</span>
@@ -213,7 +213,7 @@ export const CompanionPage: React.FC = () => {
 
       {/* Card Click Notification Banner */}
       {cardNotice && (
-        <div className="mx-4 mt-2 p-2.5 rounded-2xl bg-amber-50 border border-amber-300 text-xs text-[#7C2D12] flex items-center gap-2 shrink-0 animate-fade-in shadow-2xs">
+        <div className="mx-4 mt-2 p-2.5 rounded-none bg-amber-50 border border-amber-300 text-xs text-[#7C2D12] flex items-center gap-2 shrink-0 animate-fade-in shadow-2xs">
           <AlertCircle className="w-4 h-4 text-[#EA580C] shrink-0" />
           <span className="font-semibold leading-relaxed">{cardNotice}</span>
         </div>
@@ -226,7 +226,7 @@ export const CompanionPage: React.FC = () => {
             {/* User query bubble */}
             {msg.raw_query !== '系統歡迎語' && (
               <div className="flex justify-end">
-                <div className="max-w-[85%] rounded-3xl rounded-tr-sm px-4 py-2.5 bg-[#00AEEF] text-white text-xs font-bold shadow-sm leading-relaxed">
+                <div className="max-w-[85%] rounded-none px-4 py-2.5 bg-[#00AEEF] text-white text-xs font-bold shadow-sm leading-relaxed">
                   {msg.raw_query}
                 </div>
               </div>
@@ -234,7 +234,7 @@ export const CompanionPage: React.FC = () => {
 
             {/* AI Response Card (Bright, crisp chicTrip aesthetic) */}
             <div className="flex justify-start">
-              <div className="max-w-[95%] rounded-3xl rounded-tl-sm p-4 bg-white border border-slate-200 shadow-sm text-xs">
+              <div className="max-w-[95%] rounded-none p-4 bg-white border border-slate-200 shadow-sm text-xs">
                 {/* Header with status badge & latency */}
                 <div className="flex items-center justify-between gap-2 mb-2 pb-2 border-b border-slate-100">
                   <FreshnessBadge mode={msg.mode} />
@@ -257,7 +257,7 @@ export const CompanionPage: React.FC = () => {
 
         {loading && (
           <div className="flex justify-start">
-            <div className="rounded-2xl p-3 bg-white border border-slate-200 text-xs text-[#00AEEF] font-bold flex items-center gap-2 shadow-2xs">
+            <div className="rounded-none p-3 bg-white border border-slate-200 text-xs text-[#00AEEF] font-bold flex items-center gap-2 shadow-2xs">
               <RefreshCw className="w-3.5 h-3.5 animate-spin" />
               <span>本機離線守護包高速檢索中...</span>
             </div>
@@ -291,11 +291,11 @@ export const CompanionPage: React.FC = () => {
                 type="button"
                 onClick={() => handleQuestionCardClick(item)}
                 aria-disabled={!cardState.canClick}
-                className={`px-3 py-2 rounded-2xl text-xs whitespace-nowrap border transition-all flex items-center gap-2 shrink-0 ${cardState.cardStyle}`}
+                className={`px-3 py-2 rounded-none text-xs whitespace-nowrap border transition-all flex items-center gap-2 shrink-0 ${cardState.cardStyle}`}
               >
                 <span className="font-bold">{item.label}</span>
                 <span
-                  className={`text-[10px] px-1.5 py-0.5 rounded-full ${cardState.badgeStyle}`}
+                  className={`text-[10px] px-1.5 py-0.5 rounded-none ${cardState.badgeStyle}`}
                 >
                   {cardState.badgeLabel}
                 </span>
@@ -317,13 +317,13 @@ export const CompanionPage: React.FC = () => {
               ? '離線模式：詢問首爾住宿、AREX 交通、eSIM 排錯...'
               : '線上模式：詢問即時天氣、列車延誤或行程資訊...'
           }
-          className="flex-1 bg-[#F4F7FB] border border-slate-200 rounded-2xl px-4 py-3 text-xs text-[#171B28] placeholder-[#94A3B8] focus:outline-none focus:border-[#00AEEF] focus:bg-white transition"
+          className="flex-1 bg-[#F4F7FB] border border-slate-200 rounded-none px-4 py-3 text-xs text-[#171B28] placeholder-[#94A3B8] focus:outline-none focus:border-[#00AEEF] focus:bg-white transition"
         />
         <button
           type="button"
           onClick={() => handleSubmit(inputQuery)}
           disabled={!inputQuery.trim() || loading}
-          className="w-11 h-11 rounded-2xl bg-[#00AEEF] hover:bg-[#009bd6] disabled:opacity-40 disabled:pointer-events-none text-white transition flex items-center justify-center cursor-pointer shrink-0 shadow-xs"
+          className="w-11 h-11 rounded-none bg-[#00AEEF] hover:bg-[#009bd6] disabled:opacity-40 disabled:pointer-events-none text-white transition flex items-center justify-center cursor-pointer shrink-0 shadow-xs"
         >
           <Send className="w-4 h-4 stroke-[2.5]" />
         </button>
@@ -331,14 +331,14 @@ export const CompanionPage: React.FC = () => {
 
       {/* Bottom CTA to next funnel step */}
       <div className="px-4 py-2.5 bg-[#F4F7FB] border-t border-slate-200 flex items-center justify-between text-xs shrink-0">
-        <span className="text-[11px] text-[#64748B] font-medium">旅程結束後：</span>
+        <span className="text-[11px] text-[#64748B] font-medium shrink-0">旅程結束後：</span>
         <button
           type="button"
           onClick={() => navigate('/share')}
-          className="px-3.5 py-1.5 rounded-xl bg-[#171B28] hover:bg-slate-800 text-white text-xs font-extrabold flex items-center gap-1.5 cursor-pointer shadow-xs"
+          className="px-3.5 py-2 rounded-none bg-[#171B28] hover:bg-slate-800 text-white text-xs font-extrabold flex items-center gap-1.5 cursor-pointer shadow-xs shrink-0 whitespace-nowrap"
         >
-          <span>生成旅後 AI Travel Card (進入分享閉環)</span>
-          <ArrowRight className="w-3.5 h-3.5" />
+          <span>生成 AI Travel Card (分享閉環)</span>
+          <ArrowRight className="w-3.5 h-3.5 shrink-0" />
         </button>
       </div>
     </div>

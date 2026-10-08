@@ -28,7 +28,7 @@ export const OfflineStatusBar: React.FC = () => {
           <span className="text-[#64748B] font-semibold hidden sm:inline text-[11px]">
             網路環境模擬：
           </span>
-          <div className="inline-flex rounded-xl p-1 bg-[#F4F7FB] border border-slate-200">
+          <div className="inline-flex rounded-none p-1 bg-[#F4F7FB] border border-slate-200">
             {states.map((s) => {
               const active = connectionState === s.id;
               return (
@@ -36,7 +36,7 @@ export const OfflineStatusBar: React.FC = () => {
                   key={s.id}
                   type="button"
                   onClick={() => setConnectionState(s.id)}
-                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-all text-xs cursor-pointer ${
+                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-none transition-all text-xs cursor-pointer ${
                     active
                       ? `${s.activeClass} border`
                       : 'text-[#64748B] hover:text-[#171B28] hover:bg-white/70 border border-transparent font-medium'

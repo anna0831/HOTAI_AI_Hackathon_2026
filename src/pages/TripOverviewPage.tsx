@@ -3,8 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { Calendar, User, Smartphone, AlertTriangle, CheckCircle } from 'lucide-react';
 import { ChicHeader } from '../components/ChicHeader';
 import { PrimaryCTA } from '../components/PrimaryCTA';
+import { ExperienceTwinPanel } from '../components/ExperienceTwinPanel';
 import tripData from '../data/trip.json';
 import { analytics } from '../services/analytics';
+import { localPackStore } from '../services/localPackStore';
+import { EXPERIENCE_TWIN_FIXTURE } from '../data/experienceTwinFixture';
 
 export const TripOverviewPage: React.FC = () => {
   const navigate = useNavigate();
@@ -19,11 +22,11 @@ export const TripOverviewPage: React.FC = () => {
 
   return (
     <div className="flex-1 flex flex-col bg-[#F4F7FB]">
-      <ChicHeader subtitle="首爾 5 日行程分析與痛點洞察" />
+      <ChicHeader subtitle="首爾 5 日行程分析和痛點洞察" />
 
       <div className="p-4 space-y-4">
         {/* Trip Summary Card */}
-        <div className="rounded-3xl bg-white p-5 border border-slate-200/90 shadow-sm">
+        <div className="rounded-none bg-white p-5 border border-slate-200/90 shadow-sm">
           <div className="flex items-center justify-between mb-2">
             <span className="text-[11px] font-extrabold px-2.5 py-0.5 rounded-full bg-[#00AEEF]/10 text-[#00AEEF] border border-[#00AEEF]/20">
               去趣行程資料庫已同步
@@ -54,14 +57,14 @@ export const TripOverviewPage: React.FC = () => {
         </div>
 
         {/* AI Journey Risk & Weak-connection Pain Points */}
-        <div className="rounded-3xl bg-[#FEF3C7]/40 p-4 border border-[#F59E0B]/40 shadow-2xs text-xs">
+        <div className="rounded-none bg-[#FEF3C7]/40 p-4 border border-[#F59E0B]/40 shadow-2xs text-xs">
           <div className="flex items-center gap-2 text-[#D97706] font-extrabold mb-1.5 text-sm">
             <AlertTriangle className="w-4 h-4 text-[#F59E0B] stroke-[2.5]" />
-            <span>AI 行程風險與網路痛點洞察</span>
+            <span>AI 行程風險和網路痛點洞察</span>
           </div>
           <p className="text-[#171B28] leading-relaxed font-medium">
             分析 Anna 的首爾行程發現：
-            <strong className="text-[#D97706]"> 抵達仁川機場第一時間尚未連上網路</strong>，需查詢前往弘大住宿的 AREX 月台與飯店門牌地址；此外聖水洞快閃店人潮眾多、首爾地鐵地下站常有訊號不穩或離線斷網情境。
+            <strong className="text-[#D97706]"> 抵達仁川機場第一時間尚未連上網路</strong>，需查詢前往弘大住宿的 AREX 月台和飯店門牌地址；此外聖水洞快閃店人潮眾多、首爾地鐵地下站常有訊號不穩或離線斷網情境。
           </p>
         </div>
 
@@ -69,7 +72,7 @@ export const TripOverviewPage: React.FC = () => {
         <div className="space-y-2.5">
           <div className="flex items-center justify-between px-1">
             <h3 className="text-xs font-black text-[#171B28] tracking-tight">
-              首爾 5 日亮點與守護包收錄焦點
+              首爾 5 日亮點和守護包收錄焦點
             </h3>
             <span
               className="text-[11px] font-bold text-[#00AEEF] bg-[#E0F4FC] px-2.5 py-0.5 rounded-full border border-[#00AEEF]/20"
@@ -83,7 +86,7 @@ export const TripOverviewPage: React.FC = () => {
           {tripData.itinerary.map((day) => (
             <div
               key={day.day}
-              className="rounded-2xl bg-white p-3.5 border border-slate-200/90 shadow-2xs text-xs"
+              className="rounded-none bg-white p-3.5 border border-slate-200/90 shadow-2xs text-xs"
             >
               <div className="flex items-center justify-between mb-1">
                 <span className="font-extrabold text-[#171B28] flex items-center gap-2">
@@ -99,13 +102,18 @@ export const TripOverviewPage: React.FC = () => {
               <p className="text-[#64748B] text-xs font-medium my-1.5 pl-7">
                 {day.summary}
               </p>
-              <div className="ml-7 text-[11px] px-2.5 py-1 rounded-xl bg-[#F4F7FB] text-[#143D5C] border border-slate-200 flex items-center gap-1.5 font-semibold">
+              <div className="ml-7 text-[11px] px-2.5 py-1 rounded-none bg-[#F4F7FB] text-[#143D5C] border border-slate-200 flex items-center gap-1.5 font-semibold">
                 <CheckCircle className="w-3.5 h-3.5 text-[#00AEEF] shrink-0 stroke-[2.5]" />
                 <span>守護包預載重點：{day.offline_pack_focus}</span>
               </div>
             </div>
           ))}
         </div>
+
+        {/* Experience Twin：行前預算備案・離線可查 */}
+        <ExperienceTwinPanel
+          twins={localPackStore.getTwins()?.twins || EXPERIENCE_TWIN_FIXTURE.twins}
+        />
 
         {/* Primary CTA */}
         <div className="pt-2 pb-4">
@@ -115,7 +123,7 @@ export const TripOverviewPage: React.FC = () => {
             variant="blue"
           />
           <p className="text-[11px] text-[#64748B] text-center mt-2 font-medium">
-            展示步驟 3：行程痛點明確化 → 自然帶出 eSIM 流量與離線包價值
+            展示步驟 3：行程痛點明確化 → 自然帶出 eSIM 流量和離線包價值
           </p>
         </div>
       </div>

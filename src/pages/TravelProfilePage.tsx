@@ -59,8 +59,8 @@ export const TravelProfilePage: React.FC = () => {
         <TravelDNAResultCard profile={travelProfile} destinationLabel="首爾 5 日・Anna" />
 
         {/* Killer Benefit Callout */}
-        <div className="rounded-3xl bg-white p-4 border border-slate-200/90 shadow-sm flex items-start gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-[#E0F4FC] text-[#00AEEF] flex items-center justify-center shrink-0">
+        <div className="rounded-none bg-white p-4 border border-slate-200/90 shadow-sm flex items-start gap-3">
+          <div className="w-10 h-10 rounded-none bg-[#E0F4FC] text-[#00AEEF] flex items-center justify-center shrink-0">
             <ShieldCheck className="w-5 h-5 stroke-[2.5]" />
           </div>
           <div className="text-xs">
@@ -68,7 +68,7 @@ export const TravelProfilePage: React.FC = () => {
               專屬權益：購買去趣 eSIM 免費解鎖離線包
             </h4>
             <p className="text-[#64748B] leading-relaxed font-medium">
-              針對您在弘大與聖水洞的探險需求，購買 eSIM 即自動生成【首爾 5 日離線旅程守護包】，包含 AREX 交通、住宿門牌與 24 小時急難排錯！
+              針對您在弘大和聖水洞的探險需求，購買 eSIM 即自動生成【首爾 5 日離線旅程守護包】，包含 AREX 交通、住宿門牌和 24 小時急難排錯！
             </p>
           </div>
         </div>
@@ -76,12 +76,12 @@ export const TravelProfilePage: React.FC = () => {
         {/* Primary CTA */}
         <div className="pt-2 pb-4">
           <PrimaryCTA
-            label="查看首爾 5 日行程與推薦 eSIM"
+            label="查看首爾 5 日行程和推薦 eSIM"
             onClick={handleNext}
             variant="blue"
           />
           <p className="text-[11px] text-[#64748B] text-center mt-2 font-medium">
-            展示步驟 2：旅人認同感建立 → 自然導流至商品頁與行程分析
+            展示步驟 2：旅人認同感建立 → 自然導流至商品頁和行程分析
           </p>
         </div>
       </div>

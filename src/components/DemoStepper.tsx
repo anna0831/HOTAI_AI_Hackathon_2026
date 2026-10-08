@@ -37,7 +37,7 @@ export const DemoStepper: React.FC = () => {
             type="button"
             onClick={handlePrev}
             disabled={activeStep === 0}
-            className="p-1 rounded bg-slate-800 text-slate-300 hover:bg-slate-700 disabled:opacity-30 disabled:pointer-events-none transition"
+            className="p-1 rounded-none bg-slate-800 text-slate-300 hover:bg-slate-700 disabled:opacity-30 disabled:pointer-events-none transition"
             title="上一步"
           >
             <ChevronLeft className="w-4 h-4" />
@@ -46,7 +46,7 @@ export const DemoStepper: React.FC = () => {
             type="button"
             onClick={handleNext}
             disabled={activeStep === DEMO_STEPS.length - 1}
-            className="p-1 rounded bg-blue-600 text-white hover:bg-blue-500 disabled:opacity-30 disabled:pointer-events-none transition flex items-center gap-1 px-2 font-medium"
+            className="p-1 rounded-none bg-blue-600 text-white hover:bg-blue-500 disabled:opacity-30 disabled:pointer-events-none transition flex items-center gap-1 px-2 font-medium"
             title="下一步"
           >
             <span>下一步</span>

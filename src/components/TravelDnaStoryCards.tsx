@@ -118,7 +118,7 @@ export const TravelDnaStoryCards: React.FC = () => {
         }
       } catch (err: unknown) {
         if ((err as Error)?.name === 'AbortError') {
-          // 使用者主動取消分享，不能宣稱成功，不自動複製內容
+          // 使用者主動取消分享，不可以宣稱成功，不自動複製內容
           showNotice('已取消分享', 'info');
           return;
         }
@@ -134,7 +134,7 @@ export const TravelDnaStoryCards: React.FC = () => {
   };
 
   return (
-    <div className="rounded-3xl bg-white p-4 sm:p-5 border border-slate-200/90 shadow-sm space-y-4">
+    <div className="rounded-none bg-white p-4 sm:p-5 border border-slate-200/90 shadow-sm space-y-4">
       {/* Section Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -143,10 +143,10 @@ export const TravelDnaStoryCards: React.FC = () => {
             <span>Travel DNA 限動分享卡（9:16 輸出規格）</span>
           </div>
           <h3 className="font-black text-base text-[#171B28] tracking-tight">
-            三款 Travel DNA 範例卡切換與輸出
+            三款 Travel DNA 範例卡切換和輸出
           </h3>
         </div>
-        <span className="text-[10px] font-bold text-[#64748B] bg-[#F4F7FB] px-2 py-1 rounded-lg border border-slate-200">
+        <span className="text-[10px] font-bold text-[#64748B] bg-[#F4F7FB] px-2 py-1 rounded-none border border-slate-200">
           Prototype Generated Assets
         </span>
       </div>
@@ -160,7 +160,7 @@ export const TravelDnaStoryCards: React.FC = () => {
               key={sample.id}
               type="button"
               onClick={() => setSelectedCardId(sample.id)}
-              className={`p-2.5 rounded-2xl text-left border transition-all cursor-pointer ${
+              className={`p-2.5 rounded-none text-left border transition-all cursor-pointer ${
                 isActive
                   ? 'bg-[#E0F4FC]/60 border-[#00AEEF] ring-2 ring-[#00AEEF]/20 shadow-xs'
                   : 'bg-[#F4F7FB] border-slate-200 hover:bg-slate-100 text-[#64748B]'
@@ -179,7 +179,7 @@ export const TravelDnaStoryCards: React.FC = () => {
       </div>
 
       {/* Live Interactive 9:16 Story Card Viewport */}
-      <div className="relative w-full max-w-[340px] mx-auto aspect-[9/16] rounded-3xl overflow-hidden shadow-xl border border-slate-300/80 text-white flex flex-col justify-between p-4 sm:p-5 select-none bg-slate-900">
+      <div className="relative w-full max-w-[340px] mx-auto aspect-[9/16] rounded-none overflow-hidden shadow-xl border border-slate-300/80 text-white flex flex-col justify-between p-4 sm:p-5 select-none bg-slate-900">
         {/* Background Image Layer */}
         {!hasImageError ? (
           <img
@@ -233,7 +233,7 @@ export const TravelDnaStoryCards: React.FC = () => {
         </div>
 
         {/* Bottom Content Card Box (Safe Area Above Bottom Bar) */}
-        <div className="relative z-10 rounded-2xl bg-white/95 text-[#171B28] p-3.5 shadow-lg border border-white/50 backdrop-blur-md">
+        <div className="relative z-10 rounded-none bg-white/95 text-[#171B28] p-3.5 shadow-lg border border-white/50 backdrop-blur-md">
           {/* Top Brand Stripe */}
           <div
             className="h-1 rounded-full w-12 mb-2"
@@ -249,7 +249,7 @@ export const TravelDnaStoryCards: React.FC = () => {
           </h4>
 
           {/* Quote */}
-          <div className="p-2 rounded-xl bg-[#F4F7FB] border-l-2 border-[#00AEEF] my-2 text-[11px] text-[#143D5C] italic font-medium leading-relaxed">
+          <div className="p-2 rounded-none bg-[#F4F7FB] border-l-2 border-[#00AEEF] my-2 text-[11px] text-[#143D5C] italic font-medium leading-relaxed">
             「{activeCard.quote}」
           </div>
 
@@ -258,7 +258,7 @@ export const TravelDnaStoryCards: React.FC = () => {
             {activeCard.tags.map((tag) => (
               <span
                 key={tag}
-                className="text-[9px] font-bold px-2 py-0.5 rounded-lg bg-[#F4F7FB] text-[#143D5C] border border-slate-200"
+                className="text-[9px] font-bold px-2 py-0.5 rounded-none bg-[#F4F7FB] text-[#143D5C] border border-slate-200"
               >
                 #{tag}
               </span>
@@ -276,7 +276,7 @@ export const TravelDnaStoryCards: React.FC = () => {
                   {activeCard.referralCode}
                 </div>
               </div>
-              <span className="text-[9px] font-extrabold px-1.5 py-0.5 rounded-md bg-[#FF8614]/10 text-[#FF8614] border border-[#FF8614]/30">
+              <span className="text-[9px] font-extrabold px-1.5 py-0.5 rounded-none bg-[#FF8614]/10 text-[#FF8614] border border-[#FF8614]/30">
                 示範推薦碼
               </span>
             </div>
@@ -295,7 +295,7 @@ export const TravelDnaStoryCards: React.FC = () => {
       {/* Action Notification Message */}
       {feedbackNotice && (
         <div
-          className={`p-2.5 rounded-2xl text-xs flex items-center gap-2 ${
+          className={`p-2.5 rounded-none text-xs flex items-center gap-2 ${
             feedbackNotice.type === 'success'
               ? 'bg-[#E6F9F0] text-[#065F46] border border-[#A7F3D0]'
               : feedbackNotice.type === 'error'
@@ -318,7 +318,7 @@ export const TravelDnaStoryCards: React.FC = () => {
           type="button"
           onClick={handleDownload}
           disabled={isExporting}
-          className="h-12 rounded-2xl bg-[#00AEEF] hover:bg-[#009bd6] disabled:opacity-50 text-white font-bold text-xs shadow-md shadow-[#00AEEF]/20 flex items-center justify-center gap-2 transition cursor-pointer"
+          className="h-12 rounded-none bg-[#00AEEF] hover:bg-[#009bd6] disabled:opacity-50 text-white font-bold text-xs shadow-md shadow-[#00AEEF]/20 flex items-center justify-center gap-2 transition cursor-pointer"
         >
           {downloadSuccess ? (
             <Check className="w-4 h-4 stroke-[3]" />
@@ -332,17 +332,17 @@ export const TravelDnaStoryCards: React.FC = () => {
           type="button"
           onClick={handleShare}
           disabled={isExporting}
-          className="h-12 rounded-2xl bg-[#171B28] hover:bg-slate-800 disabled:opacity-50 text-white font-bold text-xs shadow-md shadow-slate-900/10 flex items-center justify-center gap-2 transition cursor-pointer"
+          className="h-12 rounded-none bg-[#171B28] hover:bg-slate-800 disabled:opacity-50 text-white font-bold text-xs shadow-md shadow-slate-900/10 flex items-center justify-center gap-2 transition cursor-pointer"
         >
           <Share2 className="w-4 h-4 text-[#00AEEF]" />
           <span>系統分享</span>
         </button>
       </div>
 
-      <div className="p-3 rounded-2xl bg-[#F4F7FB] border border-slate-200/80 text-[11px] text-[#64748B] flex items-center gap-2">
+      <div className="p-3 rounded-none bg-[#F4F7FB] border border-slate-200/80 text-[11px] text-[#64748B] flex items-center gap-2">
         <Tag className="w-3.5 h-3.5 text-[#00AEEF] shrink-0" />
         <span>
-          推薦碼標示「示範推薦碼，無實際優惠」；下載卡片具完整中文字、Logo 與品牌設計。
+          推薦碼標示「示範推薦碼，無實際優惠」；下載卡片具完整中文字、Logo 和品牌設計。
         </span>
       </div>
     </div>

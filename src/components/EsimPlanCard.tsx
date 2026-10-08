@@ -18,7 +18,7 @@ export const EsimPlanCard: React.FC<EsimPlanCardProps> = ({
   return (
     <div
       onClick={() => onSelect(plan)}
-      className={`rounded-3xl p-5 border-2 transition-all cursor-pointer relative bg-white ${
+      className={`rounded-none p-5 border-2 transition-all cursor-pointer relative bg-white ${
         isSelected
           ? 'border-[#00AEEF] ring-2 ring-[#00AEEF]/20 shadow-md'
           : isHighlight
@@ -55,7 +55,7 @@ export const EsimPlanCard: React.FC<EsimPlanCardProps> = ({
       </div>
 
       {/* Decision Explanation (Priority 1: 為什麼適合您) */}
-      <div className="p-3 rounded-2xl bg-[#F4F7FB] border border-slate-200/80 mb-3 text-xs leading-relaxed">
+      <div className="p-3 rounded-none bg-[#F4F7FB] border border-slate-200/80 mb-3 text-xs leading-relaxed">
         <div className="font-bold text-[#143D5C] mb-1 flex items-center gap-1">
           <span className="w-1.5 h-1.5 rounded-full bg-[#00AEEF]" />
           <span>AI 推薦原因（行程契合度）：</span>
@@ -84,7 +84,7 @@ export const EsimPlanCard: React.FC<EsimPlanCardProps> = ({
           e.stopPropagation();
           onSelect(plan);
         }}
-        className={`w-full h-12 rounded-2xl font-bold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-xs ${
+        className={`w-full h-12 rounded-none font-bold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-xs ${
           isSelected
             ? 'bg-[#00AEEF] hover:bg-[#009bd6] text-white shadow-[#00AEEF]/20'
             : isHighlight

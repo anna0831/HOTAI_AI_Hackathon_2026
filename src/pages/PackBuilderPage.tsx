@@ -8,6 +8,8 @@ import { useAppStore } from '../app/store';
 import packManifest from '../data/pack_manifest.json';
 import { getPackBuiltinQuestionsCount } from '../data/companionQuestions';
 import { cacheTravelDnaAssets } from '../services/offlineAssetCache';
+import { experienceTwinAdapter } from '../services/experienceTwinAdapter';
+import { localPackStore } from '../services/localPackStore';
 
 export const PackBuilderPage: React.FC = () => {
   const navigate = useNavigate();
@@ -16,6 +18,15 @@ export const PackBuilderPage: React.FC = () => {
   const handleDownload = async () => {
     await downloadPack();
     await cacheTravelDnaAssets();
+    // 非同步預算 Experience Twin 備案（非關鍵路徑，不阻塞主下載流程）
+    experienceTwinAdapter
+      .fetchTwins('seoul-demo-001')
+      .then((twinPack) => {
+        localPackStore.saveTwins(twinPack);
+      })
+      .catch((e) => {
+        console.warn('[ExperienceTwin] 備案預算失敗，不影響主下載流程', e);
+      });
   };
 
   const handleEnterCompanion = () => {
@@ -26,10 +37,10 @@ export const PackBuilderPage: React.FC = () => {
 
   const sectionsList = [
     { id: 'itinerary', label: '首爾 5 日完整每日行程', desc: '景點時間、順序、備用方案' },
-    { id: 'transport', label: 'AREX 機場快線與地鐵指南', desc: '弘大 3 號出口、聖水站換乘指示' },
-    { id: 'places', label: '住宿門牌與景福宮文化導覽', desc: '弘大舒適文旅地址、宮闕歷史' },
+    { id: 'transport', label: 'AREX 機場快線和地鐵指南', desc: '弘大 3 號出口、聖水站換乘指示' },
+    { id: 'places', label: '住宿門牌和景福宮文化導覽', desc: '弘大舒適文旅地址、宮闕歷史' },
     { id: 'esim_help', label: 'eSIM 啟用排錯作業標準', desc: '數據漫遊、APN、無網自救指南' },
-    { id: 'emergency', label: '海外緊急應變與求助電話', desc: '韓國 112、119、1330 觀光中文' },
+    { id: 'emergency', label: '海外緊急應變和求助電話', desc: '韓國 112、119、1330 觀光中文' },
     { id: 'phrases', label: '生存常用韓文短句庫', desc: '洗手間位置、發音對照' },
   ];
 
@@ -39,7 +50,7 @@ export const PackBuilderPage: React.FC = () => {
 
       <div className="p-4 space-y-4">
         {/* Banner with unlocked tone */}
-        <div className="rounded-3xl bg-white p-5 border border-slate-200/90 shadow-sm">
+        <div className="rounded-none bg-white p-5 border border-slate-200/90 shadow-sm">
           <SectionHeading
             badge="去趣購買後專屬加值服務"
             badgeColor="yellow"
@@ -49,32 +60,32 @@ export const PackBuilderPage: React.FC = () => {
 
           {/* Metadata pill boxes */}
           <div className="grid grid-cols-3 gap-2 text-center text-xs mt-3">
-            <div className="p-3 rounded-2xl bg-[#F4F7FB] border border-slate-200/80">
-              <div className="text-[10px] text-[#64748B] font-bold mb-0.5 flex items-center justify-center gap-1">
-                <HardDrive className="w-3 h-3 text-[#00AEEF]" />
-                <span>檔案大小</span>
+            <div className="px-1.5 py-2.5 sm:p-3 rounded-none bg-[#F4F7FB] border border-slate-200/80 min-w-0">
+              <div className="text-[10px] text-[#64748B] font-bold mb-0.5 flex items-center justify-center gap-1 shrink-0">
+                <HardDrive className="w-3 h-3 text-[#00AEEF] shrink-0" />
+                <span className="truncate">檔案大小</span>
               </div>
-              <div className="font-black text-[#171B28] font-mono text-sm">
+              <div className="font-black text-[#171B28] font-mono text-xs sm:text-sm tracking-tighter truncate">
                 {packManifest.size_kb} KB
               </div>
             </div>
 
-            <div className="p-3 rounded-2xl bg-[#F4F7FB] border border-slate-200/80">
-              <div className="text-[10px] text-[#64748B] font-bold mb-0.5 flex items-center justify-center gap-1">
-                <Database className="w-3 h-3 text-[#FF8614]" />
-                <span>內建問題</span>
+            <div className="px-1.5 py-2.5 sm:p-3 rounded-none bg-[#F4F7FB] border border-slate-200/80 min-w-0">
+              <div className="text-[10px] text-[#64748B] font-bold mb-0.5 flex items-center justify-center gap-1 shrink-0">
+                <Database className="w-3 h-3 text-[#FF8614] shrink-0" />
+                <span className="truncate">內建問題</span>
               </div>
-              <div className="font-black text-[#171B28] font-mono text-sm">
+              <div className="font-black text-[#171B28] font-mono text-xs sm:text-sm tracking-tighter truncate">
                 {getPackBuiltinQuestionsCount(packManifest.pack_id)} 題
               </div>
             </div>
 
-            <div className="p-3 rounded-2xl bg-[#F4F7FB] border border-slate-200/80">
-              <div className="text-[10px] text-[#64748B] font-bold mb-0.5 flex items-center justify-center gap-1">
-                <Calendar className="w-3 h-3 text-[#18B46B]" />
-                <span>有效期限</span>
+            <div className="px-1.5 py-2.5 sm:p-3 rounded-none bg-[#F4F7FB] border border-slate-200/80 min-w-0">
+              <div className="text-[10px] text-[#64748B] font-bold mb-0.5 flex items-center justify-center gap-1 shrink-0">
+                <Calendar className="w-3 h-3 text-[#18B46B] shrink-0" />
+                <span className="truncate">有效期限</span>
               </div>
-              <div className="font-black text-[#171B28] font-mono text-sm">
+              <div className="font-black text-[#171B28] font-mono text-xs sm:text-sm tracking-tighter truncate">
                 2026/10/31
               </div>
             </div>
@@ -82,11 +93,11 @@ export const PackBuilderPage: React.FC = () => {
         </div>
 
         {/* Download Action Box */}
-        <div className="rounded-3xl bg-white p-5 border-2 border-[#00AEEF]/40 shadow-sm">
+        <div className="rounded-none bg-white p-5 border-2 border-[#00AEEF]/40 shadow-sm">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2.5">
               <div
-                className={`w-10 h-10 rounded-2xl flex items-center justify-center ${
+                className={`w-10 h-10 rounded-none flex items-center justify-center ${
                   packState.isDownloaded
                     ? 'bg-[#E6F9F0] text-[#18B46B]'
                     : 'bg-[#E0F4FC] text-[#00AEEF]'
@@ -125,9 +136,9 @@ export const PackBuilderPage: React.FC = () => {
 
           {/* Progress bar */}
           {packState.downloadProgress > 0 && packState.downloadProgress < 100 && (
-            <div className="w-full bg-slate-100 rounded-full h-2.5 mb-3 overflow-hidden">
+            <div className="w-full bg-slate-100 rounded-none h-2.5 mb-3 overflow-hidden">
               <div
-                className="bg-[#00AEEF] h-2.5 rounded-full transition-all duration-300"
+                className="bg-[#00AEEF] h-2.5 rounded-none transition-all duration-300"
                 style={{ width: `${packState.downloadProgress}%` }}
               />
             </div>
@@ -141,7 +152,7 @@ export const PackBuilderPage: React.FC = () => {
               icon={<Download className="w-4 h-4" />}
             />
           ) : (
-            <div className="text-xs font-bold text-[#18B46B] bg-[#E6F9F0] border border-[#18B46B]/30 rounded-2xl p-3 flex items-center justify-between">
+            <div className="text-xs font-bold text-[#18B46B] bg-[#E6F9F0] border border-[#18B46B]/30 rounded-none p-3 flex items-center justify-between">
               <span className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 shrink-0 stroke-[2.5]" />
                 <span>本機已持久化儲存・離線模式隨時可用</span>
@@ -152,14 +163,14 @@ export const PackBuilderPage: React.FC = () => {
         </div>
 
         {/* Included Modules Checklist */}
-        <div className="rounded-3xl bg-white p-4 border border-slate-200/90 shadow-sm space-y-2">
+        <div className="rounded-none bg-white p-4 border border-slate-200/90 shadow-sm space-y-2">
           <h3 className="text-xs font-black text-[#171B28] mb-2 px-1">
-            守護包收錄之 6 大離線常備模組
+            守護包收錄 6 大離線常備模組
           </h3>
           {sectionsList.map((sec) => (
             <div
               key={sec.id}
-              className="p-3 rounded-2xl bg-[#F4F7FB] border border-slate-200/80 flex items-center justify-between text-xs"
+              className="p-3 rounded-none bg-[#F4F7FB] border border-slate-200/80 flex items-center justify-between text-xs"
             >
               <div>
                 <div className="font-extrabold text-[#171B28] text-xs">
@@ -169,7 +180,7 @@ export const PackBuilderPage: React.FC = () => {
                   {sec.desc}
                 </div>
               </div>
-              <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-white text-[#00AEEF] border border-[#00AEEF]/20 font-mono shadow-2xs">
+              <span className="text-[10px] font-black px-2 py-0.5 rounded-none bg-white text-[#00AEEF] border border-[#00AEEF]/20 font-mono shadow-2xs shrink-0 whitespace-nowrap">
                 收錄完備
               </span>
             </div>
@@ -179,7 +190,7 @@ export const PackBuilderPage: React.FC = () => {
         {/* Primary CTA to Companion */}
         <div className="pt-2 pb-4">
           <PrimaryCTA
-            label="進入 AI 旅伴實測（模擬抵達仁川機場）"
+            label="進入 AI 旅伴實測 (模擬仁川機場落地)"
             onClick={handleEnterCompanion}
             variant="orange"
           />

@@ -32,12 +32,12 @@ export const PrimaryCTA: React.FC<PrimaryCTAProps> = ({
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className={`h-12 sm:h-13 px-5 rounded-2xl font-extrabold text-sm sm:text-base transition-all flex items-center justify-center gap-2.5 cursor-pointer disabled:opacity-40 disabled:pointer-events-none ${
+      className={`h-12 sm:h-13 px-5 rounded-none font-extrabold text-sm sm:text-base transition-all flex items-center justify-center gap-2.5 cursor-pointer disabled:opacity-40 disabled:pointer-events-none ${
         fullWidth ? 'w-full' : ''
       } ${variantStyles[variant]} ${className}`}
     >
-      <span>{label}</span>
-      {icon || <ArrowRight className="w-4 h-4 stroke-[2.5]" />}
+      <span className="break-keep">{label}</span>
+      {icon || <ArrowRight className="w-4 h-4 stroke-[2.5] shrink-0" />}
     </button>
   );
 };

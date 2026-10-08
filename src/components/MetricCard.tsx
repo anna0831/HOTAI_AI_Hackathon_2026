@@ -22,7 +22,7 @@ export const MetricCard: React.FC<MetricCardProps> = ({
   };
 
   return (
-    <div className="p-4 rounded-3xl bg-white border border-slate-200 shadow-2xs text-[#171B28] flex flex-col justify-between">
+    <div className="p-4 rounded-none bg-white border border-slate-200 shadow-2xs text-[#171B28] flex flex-col justify-between">
       <div className="flex items-start justify-between gap-1 mb-2">
         <span className="text-xs font-bold text-[#64748B]">{label}</span>
         <span
