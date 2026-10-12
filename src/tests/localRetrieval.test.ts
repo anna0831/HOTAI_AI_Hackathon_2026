@@ -13,6 +13,13 @@ describe('LocalRetrieval Engine', () => {
     expect(res.answer).toContain('弘大入口站');
   });
 
+  it('1b. should resolve Hongdae to Incheon Airport transport', () => {
+    const res = localRetrieval.search('我要怎麼從弘大到仁川機場？', items);
+    expect(res.found).toBe(true);
+    expect(res.answer).toContain('AREX');
+    expect(res.answer).toContain('仁川國際機場');
+  });
+
   it('2. should resolve hotel address', () => {
     const res = localRetrieval.search('我的住宿地址是什麼？', items);
     expect(res.found).toBe(true);

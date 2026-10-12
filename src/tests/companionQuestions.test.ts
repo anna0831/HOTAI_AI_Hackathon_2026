@@ -21,6 +21,25 @@ describe('Companion Questions Registry and Connection State Rules', () => {
     expect(uniqueIds.size).toBe(ids.length);
   });
 
+  it('should maintain the exact user-specified button order and queries for the top 4 quick questions', () => {
+    // 1. ✈️ 弘大到機場的交通
+    expect(COMPANION_QUESTIONS[0].label).toBe('✈️ 弘大到機場的交通');
+    expect(COMPANION_QUESTIONS[0].query).toBe('我要怎麼從弘大到仁川機場？');
+    expect(COMPANION_QUESTIONS[0].requirement).toBe('offline_pack');
+
+    // 2. 📶 eSIM 沒訊號排錯
+    expect(COMPANION_QUESTIONS[1].label).toBe('📶 eSIM 沒訊號排錯');
+    expect(COMPANION_QUESTIONS[1].query).toBe('eSIM 沒有連上要先檢查什麼？');
+
+    // 3. 🏨 住宿地址與門牌
+    expect(COMPANION_QUESTIONS[2].label).toBe('🏨 住宿地址與門牌');
+    expect(COMPANION_QUESTIONS[2].query).toBe('我的住宿地址是什麼？');
+
+    // 4. 🚨 韓國緊急電話
+    expect(COMPANION_QUESTIONS[3].label).toBe('🚨 韓國緊急電話');
+    expect(COMPANION_QUESTIONS[3].query).toBe('韓國緊急電話是多少？');
+  });
+
   it('should mark downloaded pack questions as 離線可用 when pack is downloaded', () => {
     const offlineQuestion = COMPANION_QUESTIONS.find(
       (q) => q.requirement === 'offline_pack'
