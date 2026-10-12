@@ -3,6 +3,20 @@
 > **2026 和泰 AI 黑客松** 初賽提案原型｜可操作 Demo 雛形  
 > **核心論點 (Winning Thesis)**：去趣將「你旅行型態」轉成最適 eSIM 和專屬旅程服務：行前以 GenAI 互動精準導購，購買後解鎖個人化 Offline Travel Pack (Killer Benefit)，旅途中無網依然守護，旅後再生成可分享內容，形成 **曝光 → 轉換 → 服務 → 口碑** 成長飛輪。
 
+> [!TIP]
+> ### 🚀 本地即時 Demo 體驗入口
+>
+> 本專案本機開發伺服器運行於：  
+> 👉 **[http://localhost:5173/](http://localhost:5173/)** （點擊即可直接於瀏覽器開啟操作）
+>
+> **各步驟快速直達：**
+> - 🌐 **完整提案入口 (Step 1 測驗)**：[http://localhost:5173/](http://localhost:5173/)
+> - 🗺️ **首爾 5 日行程與路線圖 (Step 3)**：[http://localhost:5173/trip](http://localhost:5173/trip)（支援「今日路線」地圖與點擊放大檢視）
+> - 📶 **去趣 eSIM 推薦方案 (Step 4)**：[http://localhost:5173/esim](http://localhost:5173/esim)
+> - 📦 **離線旅程守護包 (Step 5)**：[http://localhost:5173/pack](http://localhost:5173/pack)
+> - 🤖 **離線 AI 旅伴問答 (Step 6)**：[http://localhost:5173/companion](http://localhost:5173/companion)（支援離線保護／線上即時模式切換）
+> - 📊 **Klook 競品定位與驗證指標 (Step 8)**：[http://localhost:5173/evidence](http://localhost:5173/evidence)
+
 ---
 
 ## 1. 專案定位和提案流程
