@@ -61,11 +61,15 @@ export function migrateSelectedVibes(raw: unknown): string[] {
 }
 
 /**
- * 依據所有選取的期待旅遊方案（複選）綜合產出旅行者畫像與 eSIM 推薦依據
- * 確保下游行程生成、摘要與推薦邏輯完整使用所有選項，而非僅取第一個。
+ * 依據所有選取的期待旅遊方案（複選）與海外上網使用習慣（複選）綜合產出旅行者畫像與 eSIM 推薦依據
+ * 確保下游行程生成、摘要與推薦邏輯完整使用所有選項，而非僅取單一值。
  */
-export function buildProfileFromVibes(selectedIds: string[]): TravelProfile {
+export function buildProfileFromVibes(
+  selectedIds: string[],
+  usageHabits?: string[]
+): TravelProfile {
   const safeIds = selectedIds.length > 0 ? selectedIds : ['cafe_culture'];
+  const safeHabits = usageHabits && usageHabits.length > 0 ? usageHabits : ['photo_map'];
   const matchedVibes = TRAVEL_VIBE_OPTIONS.filter((v) => safeIds.includes(v.id));
   const fallbackVibes = matchedVibes.length > 0 ? matchedVibes : [TRAVEL_VIBE_OPTIONS[0]];
 
@@ -102,12 +106,31 @@ export function buildProfileFromVibes(selectedIds: string[]): TravelProfile {
     tagline = '精準鎖定最新潮牌與快閃空間，在首爾的繁華商圈中尋找專屬風格靈感';
   }
 
+  // 根據海外上網使用習慣擴充標籤特徵
+  if (safeHabits.includes('photo_map') || safeHabits.includes('map')) {
+    allTags.add('重度地圖導航');
+  }
+  if (safeHabits.includes('safety_offline') || safeHabits.includes('offline')) {
+    allTags.add('落地安心守護');
+  }
+
+  const hasMap = safeHabits.includes('photo_map') || safeHabits.includes('map');
+  const hasOffline = safeHabits.includes('safety_offline') || safeHabits.includes('offline');
+
+  let habitDescription = '行程緊湊且極度依賴地圖定位與即時拍照打卡';
+  if (hasMap && hasOffline) {
+    habitDescription = '行程緊湊且兼顧地圖導航、即時打卡與落地離線守護';
+  } else if (hasOffline) {
+    habitDescription = '首重抵達仁川機場後離線查住宿交通與緊急排錯';
+  }
+
   return {
     type: typeName,
     badge: badgeName,
     tagline,
-    description: `您在首爾期待的重點包含【${titles}】（${descriptions}）。行程緊湊且極度依賴地圖定位與即時拍照打卡，特別適合搭配高覆蓋率的去趣 eSIM 與離線守護包。`,
+    description: `您在首爾期待的重點包含【${titles}】（${descriptions}）。${habitDescription}，特別適合搭配高覆蓋率的去趣 eSIM 與離線守護包。`,
     matched_tags: Array.from(allTags),
     recommended_plan_id: 'kr-5d-daily2gb',
+    usage_habits: safeHabits,
   };
 }

@@ -1,5 +1,5 @@
 // ChicTrip Offline Service Worker
-const CACHE_NAME = 'chictrip-offline-v1';
+const CACHE_NAME = 'chictrip-offline-v2';
 const PRECACHE_URLS = [
   '/',
   '/index.html',
@@ -7,6 +7,15 @@ const PRECACHE_URLS = [
   '/images/travel-dna/urban-seoul.webp',
   '/images/travel-dna/food-osaka.webp',
   '/images/travel-dna/nature-hokkaido.webp',
+  '/images/seoul/attractions/airport.webp',
+  '/images/seoul/attractions/hongdae.webp',
+  '/images/seoul/attractions/gyeongbokgung.webp',
+  '/images/seoul/attractions/bukchon.webp',
+  '/images/seoul/attractions/ikseondong.webp',
+  '/images/seoul/attractions/seongsu.webp',
+  '/images/seoul/attractions/seoul-forest.webp',
+  '/images/seoul/attractions/myeongdong.webp',
+  '/images/seoul/attractions/n-seoul-tower.webp',
 ];
 
 self.addEventListener('install', (event) => {
@@ -53,6 +62,16 @@ self.addEventListener('fetch', (event) => {
 
   // Handle static assets & API / images
   if (url.origin === self.location.origin) {
+    // 忽略 Vite 開發模式的內部檔案與動態原始碼請求，確保原始碼修改即時生效
+    if (
+      url.pathname.startsWith('/src/') ||
+      url.pathname.startsWith('/@') ||
+      url.pathname.includes('node_modules') ||
+      url.searchParams.has('t')
+    ) {
+      return;
+    }
+
     event.respondWith(
       caches.match(event.request).then((cachedResponse) => {
         if (cachedResponse) {

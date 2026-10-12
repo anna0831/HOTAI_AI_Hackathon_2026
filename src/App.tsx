@@ -5,7 +5,11 @@ import { ChicBottomNav } from './components/ChicBottomNav';
 import { MobileFrame } from './components/MobileFrame';
 import { AppRouter } from './app/router';
 import { localPackStore } from './services/localPackStore';
-import { registerServiceWorker, cacheTravelDnaAssets } from './services/offlineAssetCache';
+import {
+  registerServiceWorker,
+  cacheTravelDnaAssets,
+  cacheSeoulItineraryAssets,
+} from './services/offlineAssetCache';
 
 export const App: React.FC = () => {
   useEffect(() => {
@@ -14,6 +18,7 @@ export const App: React.FC = () => {
     // Register Service Worker and cache Travel DNA assets for offline support
     registerServiceWorker();
     cacheTravelDnaAssets();
+    cacheSeoulItineraryAssets();
   }, []);
 
   return (

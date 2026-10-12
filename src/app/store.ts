@@ -15,10 +15,12 @@ export interface TravelProfile {
   description: string;
   matched_tags: string[];
   recommended_plan_id: string;
+  usage_habits?: string[];
 }
 
 const STORAGE_KEY_CONNECTION = 'chic_connection_state';
 const STORAGE_KEY_SELECTED_VIBES = 'chic_selected_vibes';
+const STORAGE_KEY_USAGE_HABITS = 'chic_usage_habits';
 
 function getInitialConnectionState(): ConnectionState {
   if (typeof window === 'undefined') return 'online';
@@ -58,6 +60,25 @@ function getInitialSelectedVibes(): string[] {
   return ['cafe_culture'];
 }
 
+function getInitialUsageHabits(): string[] {
+  if (typeof window === 'undefined') return ['photo_map'];
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY_USAGE_HABITS);
+    if (raw) {
+      try {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) return parsed;
+        if (typeof parsed === 'string') return [parsed];
+      } catch {
+        return [raw];
+      }
+    }
+  } catch (e) {
+    console.warn('Failed to read usage habits from localStorage', e);
+  }
+  return ['photo_map'];
+}
+
 interface AppState {
   // Connection state simulator (online or offline)
   connectionState: ConnectionState;
@@ -83,6 +104,11 @@ interface AppState {
   setSelectedVibes: (vibes: string[] | string) => void;
   toggleVibe: (vibeId: string) => void;
 
+  // Selected Usage Habits (海外上網的使用習慣 - 複選陣列)
+  usageHabits: string[];
+  setUsageHabits: (habits: string[]) => void;
+  toggleUsageHabit: (habitId: string) => void;
+
   // Travel DNA Profile
   travelProfile: TravelProfile;
   setTravelProfile: (profile: TravelProfile) => void;
@@ -95,7 +121,8 @@ interface AppState {
 }
 
 const initialVibes = getInitialSelectedVibes();
-export const defaultProfile: TravelProfile = buildProfileFromVibes(initialVibes);
+const initialHabits = getInitialUsageHabits();
+export const defaultProfile: TravelProfile = buildProfileFromVibes(initialVibes, initialHabits);
 
 export const useAppStore = create<AppState>((set, get) => ({
   connectionState: getInitialConnectionState(),
@@ -162,7 +189,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   selectedVibes: initialVibes,
   setSelectedVibes: (input) => {
     const migrated = migrateSelectedVibes(input);
-    const updatedProfile = buildProfileFromVibes(migrated);
+    const updatedProfile = buildProfileFromVibes(migrated, get().usageHabits);
     set({ selectedVibes: migrated, travelProfile: updatedProfile });
     try {
       localStorage.setItem(STORAGE_KEY_SELECTED_VIBES, JSON.stringify(migrated));
@@ -178,7 +205,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     } else {
       next = [...current, vibeId];
     }
-    const updatedProfile = buildProfileFromVibes(next);
+    const updatedProfile = buildProfileFromVibes(next, get().usageHabits);
     set({ selectedVibes: next, travelProfile: updatedProfile });
     try {
       localStorage.setItem(STORAGE_KEY_SELECTED_VIBES, JSON.stringify(next));
@@ -186,6 +213,52 @@ export const useAppStore = create<AppState>((set, get) => ({
       // Ignore
     }
     analytics.track('travel_vibe_toggled', { vibe_id: vibeId, total_selected: next.length });
+  },
+
+  usageHabits: initialHabits,
+  setUsageHabits: (habits) => {
+    set({ usageHabits: habits });
+    try {
+      localStorage.setItem(STORAGE_KEY_USAGE_HABITS, JSON.stringify(habits));
+    } catch {
+      // Ignore
+    }
+    const updatedProfile = buildProfileFromVibes(get().selectedVibes, habits);
+    set({ travelProfile: updatedProfile });
+  },
+  toggleUsageHabit: (habitId) => {
+    const current = get().usageHabits;
+    const normalizedTarget =
+      habitId === 'map' ? 'photo_map' : habitId === 'offline' ? 'safety_offline' : habitId;
+
+    let next: string[];
+    const isAlreadySelected = current.some(
+      (h) =>
+        h === normalizedTarget ||
+        (normalizedTarget === 'photo_map' && h === 'map') ||
+        (normalizedTarget === 'safety_offline' && h === 'offline')
+    );
+
+    if (isAlreadySelected) {
+      next = current.filter(
+        (h) =>
+          h !== normalizedTarget &&
+          !(normalizedTarget === 'photo_map' && h === 'map') &&
+          !(normalizedTarget === 'safety_offline' && h === 'offline')
+      );
+    } else {
+      next = [...current, normalizedTarget];
+    }
+
+    set({ usageHabits: next });
+    try {
+      localStorage.setItem(STORAGE_KEY_USAGE_HABITS, JSON.stringify(next));
+    } catch {
+      // Ignore
+    }
+    const updatedProfile = buildProfileFromVibes(get().selectedVibes, next);
+    set({ travelProfile: updatedProfile });
+    analytics.track('usage_habit_toggled', { habit_id: habitId, total_selected: next.length });
   },
 
   travelProfile: defaultProfile,

@@ -1,16 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Calendar, User, Smartphone, AlertTriangle, CheckCircle } from 'lucide-react';
+import { Calendar, User, Smartphone, AlertTriangle, CheckCircle, Image as ImageIcon } from 'lucide-react';
 import { ChicHeader } from '../components/ChicHeader';
 import { PrimaryCTA } from '../components/PrimaryCTA';
 import { ExperienceTwinPanel } from '../components/ExperienceTwinPanel';
+import { SeoulItineraryCard } from '../components/SeoulItineraryCard';
 import tripData from '../data/trip.json';
 import { analytics } from '../services/analytics';
 import { localPackStore } from '../services/localPackStore';
 import { EXPERIENCE_TWIN_FIXTURE } from '../data/experienceTwinFixture';
+import {
+  getSeoulImagesOfflineStatus,
+  type SeoulImagesOfflineStatus,
+} from '../services/offlineAssetCache';
+import type { ItineraryDay } from '../domain/trip';
 
 export const TripOverviewPage: React.FC = () => {
   const navigate = useNavigate();
+  // 預設五張卡片保持摘要模式，同時間最多只展開一張卡片
+  const [expandedDay, setExpandedDay] = useState<number | null>(null);
+  const [offlineImageStatus, setOfflineImageStatus] = useState<SeoulImagesOfflineStatus | null>(null);
+
+  useEffect(() => {
+    // 檢查離線圖片狀態，明確區分行程文字與圖片離線就緒度
+    getSeoulImagesOfflineStatus().then(setOfflineImageStatus);
+  }, []);
+
+  const handleToggleDay = (dayNum: number) => {
+    setExpandedDay((prev) => (prev === dayNum ? null : dayNum));
+  };
 
   const handleNext = () => {
     analytics.track('esim_recommendation_viewed', {
@@ -68,46 +86,43 @@ export const TripOverviewPage: React.FC = () => {
           </p>
         </div>
 
-        {/* 5-Day Itinerary Highlights */}
+        {/* 5-Day Itinerary Highlights with Enhanced Photo & Route Cards */}
         <div className="space-y-2.5">
-          <div className="flex items-center justify-between px-1">
+          <div className="flex flex-wrap items-center justify-between gap-1.5 px-1">
             <h3 className="text-xs font-black text-[#171B28] tracking-tight">
               首爾 5 日亮點和守護包收錄焦點
             </h3>
-            <span
-              className="text-[11px] font-bold text-[#00AEEF] bg-[#E0F4FC] px-2.5 py-0.5 rounded-full border border-[#00AEEF]/20"
-              aria-label="已儲存行程"
-              title="已儲存行程至手機本機"
-            >
-              已儲存行程
-            </span>
+            <div className="flex items-center gap-1.5">
+              <span
+                className="text-[10px] font-bold text-[#00AEEF] bg-[#E0F4FC] px-2 py-0.5 rounded-full border border-[#00AEEF]/20 flex items-center gap-1"
+                aria-label="行程資料已儲存"
+                title="行程文字已完整儲存至手機本機"
+              >
+                <CheckCircle className="w-3 h-3 text-[#00AEEF]" />
+                行程資料已儲存
+              </span>
+              <span
+                className="text-[10px] font-mono font-bold text-[#143D5C] bg-white px-2 py-0.5 rounded-full border border-slate-200 flex items-center gap-1 shadow-2xs"
+                title="離線圖片快取狀態（景點照片 9 張 ＋ 路線圖 5 張）"
+              >
+                <ImageIcon className="w-3 h-3 text-[#00AEEF]" />
+                {offlineImageStatus && (offlineImageStatus.attractionCachedCount > 0 || offlineImageStatus.routeCachedCount > 0)
+                  ? `離線圖片就緒 (${offlineImageStatus.attractionCachedCount + offlineImageStatus.routeCachedCount}/${offlineImageStatus.totalAttractions + offlineImageStatus.totalRoutes})`
+                  : '景點與路線圖已就緒'}
+              </span>
+            </div>
           </div>
 
-          {tripData.itinerary.map((day) => (
-            <div
-              key={day.day}
-              className="rounded-none bg-white p-3.5 border border-slate-200/90 shadow-2xs text-xs"
-            >
-              <div className="flex items-center justify-between mb-1">
-                <span className="font-extrabold text-[#171B28] flex items-center gap-2">
-                  <span className="w-5 h-5 rounded-full bg-[#00AEEF] text-white text-[11px] flex items-center justify-center font-bold">
-                    {day.day}
-                  </span>
-                  <span>Day {day.day}・{day.region}</span>
-                </span>
-                <span className="text-[11px] text-[#64748B] font-mono font-medium">
-                  {day.date}
-                </span>
-              </div>
-              <p className="text-[#64748B] text-xs font-medium my-1.5 pl-7">
-                {day.summary}
-              </p>
-              <div className="ml-7 text-[11px] px-2.5 py-1 rounded-none bg-[#F4F7FB] text-[#143D5C] border border-slate-200 flex items-center gap-1.5 font-semibold">
-                <CheckCircle className="w-3.5 h-3.5 text-[#00AEEF] shrink-0 stroke-[2.5]" />
-                <span>守護包預載重點：{day.offline_pack_focus}</span>
-              </div>
-            </div>
-          ))}
+          <div className="space-y-3">
+            {(tripData.itinerary as unknown as ItineraryDay[]).map((day) => (
+              <SeoulItineraryCard
+                key={day.day}
+                day={day}
+                isExpanded={expandedDay === day.day}
+                onToggleExpand={() => handleToggleDay(day.day)}
+              />
+            ))}
+          </div>
         </div>
 
         {/* Experience Twin：行前預算備案・離線可查 */}

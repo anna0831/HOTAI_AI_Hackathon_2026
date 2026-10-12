@@ -20,10 +20,9 @@ import { analytics } from '../services/analytics';
 
 export const CampaignLandingPage: React.FC = () => {
   const navigate = useNavigate();
-  const { selectedVibes, toggleVibe } = useAppStore();
+  const { selectedVibes, toggleVibe, usageHabits, toggleUsageHabit } = useAppStore();
 
   const [destination, setDestination] = useState('seoul');
-  const [priority, setPriority] = useState('photo_map');
 
   const destinations = [
     {
@@ -70,7 +69,7 @@ export const CampaignLandingPage: React.FC = () => {
     analytics.track('trip_viewed', { trip_id: 'seoul-demo-001' });
     analytics.track('travel_profile_generated', {
       profile_type: '城市探險型旅人',
-      input_signals: [destination, ...selectedVibes, priority],
+      input_signals: [destination, ...selectedVibes, ...usageHabits],
     });
     analytics.track('campaign_cta_clicked', {
       profile_type: '城市探險型旅人',
@@ -214,44 +213,78 @@ export const CampaignLandingPage: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-extrabold text-[#171B28] mb-2 flex items-center gap-1.5">
-              <Wifi className="w-3.5 h-3.5 text-[#00AEEF]" />
-              <span>海外上網最重要的使用習慣？</span>
-            </label>
+            <div className="flex items-center justify-between mb-2">
+              <label className="text-xs font-extrabold text-[#171B28] flex items-center gap-1.5">
+                <Wifi className="w-3.5 h-3.5 text-[#00AEEF]" />
+                <span>海外上網的使用習慣？</span>
+              </label>
+              <span className="text-[11px] text-[#64748B] font-medium">
+                可複選（已選 {usageHabits.length} 項）
+              </span>
+            </div>
             <div className="grid grid-cols-2 gap-2">
-              <button
-                type="button"
-                onClick={() => setPriority('photo_map')}
-                className={`p-3 rounded-none text-left border transition cursor-pointer ${
-                  priority === 'photo_map'
-                    ? 'bg-[#E0F4FC]/40 border-[#00AEEF] text-[#143D5C] ring-1 ring-[#00AEEF]/20'
-                    : 'bg-[#F4F7FB] border-slate-200 text-[#64748B] hover:border-slate-300'
-                }`}
-              >
-                <div className="font-extrabold text-xs text-[#171B28] mb-0.5">
-                  🗺️ 重度地圖＋限動打卡
-                </div>
-                <div className="text-[11px] text-[#64748B]">
-                  隨時導航地鐵、即時上傳照片
-                </div>
-              </button>
+              {(() => {
+                const isPhotoMapSelected = usageHabits.some(
+                  (h) => h === 'photo_map' || h === 'map'
+                );
+                const isSafetyOfflineSelected = usageHabits.some(
+                  (h) => h === 'safety_offline' || h === 'offline'
+                );
 
-              <button
-                type="button"
-                onClick={() => setPriority('safety_offline')}
-                className={`p-3 rounded-none text-left border transition cursor-pointer ${
-                  priority === 'safety_offline'
-                    ? 'bg-[#E0F4FC]/40 border-[#00AEEF] text-[#143D5C] ring-1 ring-[#00AEEF]/20'
-                    : 'bg-[#F4F7FB] border-slate-200 text-[#64748B] hover:border-slate-300'
-                }`}
-              >
-                <div className="font-extrabold text-xs text-[#171B28] mb-0.5">
-                  🛡️ 落地安心不迷路
-                </div>
-                <div className="text-[11px] text-[#64748B]">
-                  離線仍可查住宿交通、緊急電話
-                </div>
-              </button>
+                return (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => toggleUsageHabit('photo_map')}
+                      className={`p-3 rounded-none text-left border transition-all cursor-pointer ${
+                        isPhotoMapSelected
+                          ? 'bg-[#E0F4FC]/60 border-[#00AEEF] text-[#143D5C] ring-1 ring-[#00AEEF]/20 shadow-2xs'
+                          : 'bg-[#F4F7FB] border-slate-200 text-[#64748B] hover:border-slate-300'
+                      }`}
+                      aria-pressed={isPhotoMapSelected}
+                    >
+                      <div className="flex items-start justify-between gap-1 mb-1">
+                        <div className="font-extrabold text-xs text-[#171B28]">
+                          🗺️ 重度地圖＋限動打卡
+                        </div>
+                        {isPhotoMapSelected ? (
+                          <CheckSquare className="w-4 h-4 text-[#00AEEF] shrink-0" />
+                        ) : (
+                          <Square className="w-4 h-4 text-slate-300 shrink-0" />
+                        )}
+                      </div>
+                      <div className="text-[11px] text-[#64748B] leading-relaxed">
+                        隨時導航地鐵、即時上傳照片
+                      </div>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => toggleUsageHabit('safety_offline')}
+                      className={`p-3 rounded-none text-left border transition-all cursor-pointer ${
+                        isSafetyOfflineSelected
+                          ? 'bg-[#E0F4FC]/60 border-[#00AEEF] text-[#143D5C] ring-1 ring-[#00AEEF]/20 shadow-2xs'
+                          : 'bg-[#F4F7FB] border-slate-200 text-[#64748B] hover:border-slate-300'
+                      }`}
+                      aria-pressed={isSafetyOfflineSelected}
+                    >
+                      <div className="flex items-start justify-between gap-1 mb-1">
+                        <div className="font-extrabold text-xs text-[#171B28]">
+                          🛡️ 落地安心不迷路
+                        </div>
+                        {isSafetyOfflineSelected ? (
+                          <CheckSquare className="w-4 h-4 text-[#00AEEF] shrink-0" />
+                        ) : (
+                          <Square className="w-4 h-4 text-slate-300 shrink-0" />
+                        )}
+                      </div>
+                      <div className="text-[11px] text-[#64748B] leading-relaxed">
+                        離線仍可查住宿交通、緊急電話
+                      </div>
+                    </button>
+                  </>
+                );
+              })()}
             </div>
           </div>
 

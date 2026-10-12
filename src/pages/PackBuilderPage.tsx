@@ -7,7 +7,7 @@ import { SectionHeading } from '../components/SectionHeading';
 import { useAppStore } from '../app/store';
 import packManifest from '../data/pack_manifest.json';
 import { getPackBuiltinQuestionsCount } from '../data/companionQuestions';
-import { cacheTravelDnaAssets } from '../services/offlineAssetCache';
+import { cacheTravelDnaAssets, cacheSeoulItineraryAssets } from '../services/offlineAssetCache';
 import { experienceTwinAdapter } from '../services/experienceTwinAdapter';
 import { localPackStore } from '../services/localPackStore';
 
@@ -18,6 +18,7 @@ export const PackBuilderPage: React.FC = () => {
   const handleDownload = async () => {
     await downloadPack();
     await cacheTravelDnaAssets();
+    await cacheSeoulItineraryAssets();
     // 非同步預算 Experience Twin 備案（非關鍵路徑，不阻塞主下載流程）
     experienceTwinAdapter
       .fetchTwins('seoul-demo-001')
@@ -37,6 +38,7 @@ export const PackBuilderPage: React.FC = () => {
 
   const sectionsList = [
     { id: 'itinerary', label: '首爾 5 日完整每日行程', desc: '景點時間、順序、備用方案' },
+    { id: 'photos', label: '五日代表景點離線照片集', desc: '9 處景點高清快取、本機免網瀏覽' },
     { id: 'transport', label: 'AREX 機場快線和地鐵指南', desc: '弘大 3 號出口、聖水站換乘指示' },
     { id: 'places', label: '住宿門牌和景福宮文化導覽', desc: '弘大舒適文旅地址、宮闕歷史' },
     { id: 'esim_help', label: 'eSIM 啟用排錯作業標準', desc: '數據漫遊、APN、無網自救指南' },
