@@ -15,10 +15,23 @@ export const App: React.FC = () => {
   useEffect(() => {
     // Ensure default offline pack is seeded for seamless demo
     localPackStore.ensureDefaultPack();
-    // Register Service Worker and cache Travel DNA assets for offline support
-    registerServiceWorker();
-    cacheTravelDnaAssets();
-    cacheSeoulItineraryAssets();
+
+    // Defer heavy background asset caching to idle time so first paint & interactivity are instant
+    const scheduleBackgroundCaching = () => {
+      registerServiceWorker();
+      cacheTravelDnaAssets();
+      cacheSeoulItineraryAssets();
+    };
+
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const handle = (window as any).requestIdleCallback(scheduleBackgroundCaching, { timeout: 2500 });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return () => (window as any).cancelIdleCallback?.(handle);
+    } else {
+      const timer = setTimeout(scheduleBackgroundCaching, 1200);
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   return (
